@@ -1,0 +1,12 @@
+# Generic
+.*
+
+# Maven
+target/
+!**/src/*/java/**/target/
+
+# Interlij IDEA
+*.iml
+
+# Included
+!./.gitignore
