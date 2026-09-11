@@ -9,4 +9,11 @@ import java.util.Optional;
  * @param <ID> Type of unique id of the entity
  */
 public interface Repository<T, ID> {
+    /**
+     * Finds entity by its unique ID
+     * @param id the unique ID
+     * @return Optional that contains the entity, or empty optional if the entity don't exist
+     */
+    Optional<T> findById(ID id);
+
 }
