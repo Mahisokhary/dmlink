@@ -15,4 +15,9 @@ public interface RoleRepository extends Repository<Role, Long> {
      */
     Optional<Role> findByName(String name);
 
+    /**
+     * Returns default role that should be assigned to users
+     */
+    Optional<Role> getDefaultRole();
+
 }
