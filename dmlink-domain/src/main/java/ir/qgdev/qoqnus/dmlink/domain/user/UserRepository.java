@@ -15,4 +15,11 @@ public interface UserRepository extends Repository<User, Long> {
      */
     Optional<User> findByUsername(String username);
 
+    /**
+     * Checks if a user with given username exists
+     * @param username the username
+     * @return whether the user exists or not
+     */
+    boolean existsByUsername(String username);
+
 }
