@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
  * @param path The path (index.html)
  */
 public record HttpUrl(boolean secure, @NonNull String host, Integer port, String path) {
+    private static final Pattern HTTP_URL_PATTERN = Pattern.compile("^(?:http(|s)://)?([^/:]+\\.[^/:]+)(?::(\\d+))?(/.*)?$");
+
     public HttpUrl {
         if (host.isEmpty())
             throw new IllegalArgumentException("host is required");
