@@ -16,4 +16,10 @@ public interface Repository<T, ID> {
      */
     Optional<T> findById(ID id);
 
+    /**
+     * Fetches all entities in the repository
+     * @return A collection of fetched entities
+     */
+    Collection<T> findAll();
+
 }
