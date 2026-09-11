@@ -2,4 +2,5 @@ module ir.qgdev.qoqnus.dmlink.domain {
     requires static lombok;
 
     exports ir.qgdev.qoqnus.dmlink.domain;
+    exports ir.qgdev.qoqnus.dmlink.domain.role;
 }
