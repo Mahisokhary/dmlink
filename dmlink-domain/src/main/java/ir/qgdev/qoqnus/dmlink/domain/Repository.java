@@ -30,4 +30,10 @@ public interface Repository<T, ID> {
      */
     T save(T entity);
 
+    /**
+     * Delete an entity by its unique ID
+     * @param id unique ID of the entity
+     */
+    void deleteById(ID id);
+
 }
