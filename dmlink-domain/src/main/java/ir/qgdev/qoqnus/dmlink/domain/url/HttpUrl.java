@@ -14,6 +14,23 @@ import java.util.regex.Pattern;
 public record HttpUrl(boolean secure, @NonNull String host, Integer port, String path) {
     private static final Pattern HTTP_URL_PATTERN = Pattern.compile("^(?:http(|s)://)?([^/:]+\\.[^/:]+)(?::(\\d+))?(/.*)?$");
 
+    /**
+     * Extract http url from a string
+     */
+    public static HttpUrl fromString(String url) {
+        var m = HTTP_URL_PATTERN.matcher(url);
+        if (!m.matches()) {
+            throw new IllegalArgumentException("Invalid HttpUrl: " + url);
+        }
+
+        boolean secure = m.group(1) == null || "s".equals(m.group(1));
+        String host = m.group(2);
+        Integer port = m.group(3) != null ? Integer.valueOf(m.group(3)) : null;
+        String path = m.group(4);
+
+        return new HttpUrl(secure, host, port, path);
+    }
+
     public HttpUrl {
         if (host.isEmpty())
             throw new IllegalArgumentException("host is required");
