@@ -3,4 +3,5 @@ module ir.qgdev.qoqnus.dmlink.domain {
 
     exports ir.qgdev.qoqnus.dmlink.domain;
     exports ir.qgdev.qoqnus.dmlink.domain.role;
+    exports ir.qgdev.qoqnus.dmlink.domain.user;
 }
