@@ -17,4 +17,11 @@ public interface LinkRepository extends Repository<Link, Long> {
      */
     Optional<Link> findByName(String name);
 
+    /**
+     * Fetches a collection of all links owned by the given user
+     * @param owner the user
+     * @return Collection of fetched links
+     */
+    Collection<Link> findAllByOwner(User owner);
+
 }
