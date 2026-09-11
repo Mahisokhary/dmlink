@@ -10,4 +10,11 @@ import java.util.Optional;
  * A repository to save and give access to links
  */
 public interface LinkRepository extends Repository<Link, Long> {
+    /**
+     * Finds link by its unique name
+     * @param name the unique name of the link
+     * @return Optional that contains the link, or empty optional if the link don't exist
+     */
+    Optional<Link> findByName(String name);
+
 }
