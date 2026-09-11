@@ -11,6 +11,7 @@
 
     <modules>
         <module>dmlink-domain</module>
+        <module>dmlink-application</module>
     </modules>
 
     <dependencies>
