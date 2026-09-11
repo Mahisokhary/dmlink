@@ -22,4 +22,10 @@ public interface UserRepository extends Repository<User, Long> {
      */
     boolean existsByUsername(String username);
 
+    /**
+     * Deletes user with given username
+     * @param username the username
+     */
+    void deleteByUsername(String username);
+
 }
