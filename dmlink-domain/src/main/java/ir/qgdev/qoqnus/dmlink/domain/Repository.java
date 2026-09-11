@@ -22,4 +22,12 @@ public interface Repository<T, ID> {
      */
     Collection<T> findAll();
 
+    /**
+     * Saves entity to repository
+     * Given entity can be a new entity who needs to be saved or existing one who needs to be updated
+     * @param entity the entity to be saved
+     * @return saved entity
+     */
+    T save(T entity);
+
 }
