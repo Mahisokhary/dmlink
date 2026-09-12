@@ -32,4 +32,9 @@ public interface UserService {
      */
     void changePassword(User user, String newPassword);
 
+    /**
+     * Checks if given password is password of the given user
+     */
+    boolean verifyPassword(User user, String password);
+
 }
