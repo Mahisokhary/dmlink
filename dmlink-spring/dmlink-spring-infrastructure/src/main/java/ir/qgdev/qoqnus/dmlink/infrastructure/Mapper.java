@@ -13,4 +13,9 @@ public interface Mapper<D extends Entity, J> {
      */
     D toDomain(J jpa);
 
+    /**
+     * Convert given domain entity to JPA entity
+     */
+    J toJpa(D domain);
+
 }
