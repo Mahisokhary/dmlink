@@ -15,4 +15,21 @@ public interface UserService {
      */
     User create(String username, String displayName, String password);
 
+    /**
+     * Checks if given old password of the use is correct
+     * and then changes password of the user to given new password
+     * @param user the user
+     * @param oldPassword the old password
+     * @param newPassword the new password
+     * @throws IllegalArgumentException if old password is wrong
+     */
+    void changePassword(User user, String oldPassword, String newPassword) throws IllegalArgumentException;
+
+    /**
+     * Changes password of the user to the new password
+     * @param user the user
+     * @param newPassword the new password
+     */
+    void changePassword(User user, String newPassword);
+
 }
