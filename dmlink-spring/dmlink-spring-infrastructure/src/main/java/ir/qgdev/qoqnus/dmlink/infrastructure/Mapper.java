@@ -27,4 +27,13 @@ public interface Mapper<D extends Entity, J> {
                 .toList();
     }
 
+    /**
+     * Convert given collection of domain entity to a collection of JPA entity
+     */
+    default Collection<J> toJpa(Collection<? extends D> domain) {
+        return domain.stream()
+                .map(this::toJpa)
+                .toList();
+    }
+
 }
