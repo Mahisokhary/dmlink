@@ -3,4 +3,5 @@ module ir.qgdev.qoqnus.dmlink.application {
     requires static lombok;
 
     exports ir.qgdev.qoqnus.dmlink.application.crypto;
+    exports ir.qgdev.qoqnus.dmlink.application.role;
 }
