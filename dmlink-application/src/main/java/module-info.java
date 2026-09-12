@@ -5,4 +5,5 @@ module ir.qgdev.qoqnus.dmlink.application {
     exports ir.qgdev.qoqnus.dmlink.application.crypto;
     exports ir.qgdev.qoqnus.dmlink.application.role;
     exports ir.qgdev.qoqnus.dmlink.application.user;
+    exports ir.qgdev.qoqnus.dmlink.application.session;
 }
