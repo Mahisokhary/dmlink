@@ -26,6 +26,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>dmlink-spring-infrastructure</module>
     </modules>
 
     <properties>
