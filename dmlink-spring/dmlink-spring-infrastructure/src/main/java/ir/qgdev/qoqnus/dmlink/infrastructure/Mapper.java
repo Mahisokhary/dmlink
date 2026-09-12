@@ -8,4 +8,9 @@ import java.util.Collection;
  * Map domain entities to jpa entities and vice versa
  */
 public interface Mapper<D extends Entity, J> {
+    /**
+     * Convert given JPA entity to domain entity
+     */
+    D toDomain(J jpa);
+
 }
