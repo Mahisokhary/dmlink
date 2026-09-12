@@ -10,6 +10,18 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <type>pom</type>
+                <version>4.1.0</version>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <artifactId>dmlink-spring</artifactId>
     <packaging>pom</packaging>
 
