@@ -12,6 +12,7 @@
     <modules>
         <module>dmlink-domain</module>
         <module>dmlink-application</module>
+        <module>dmlink-spring</module>
     </modules>
 
     <dependencies>
