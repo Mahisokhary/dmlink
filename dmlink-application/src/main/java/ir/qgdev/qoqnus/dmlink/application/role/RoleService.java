@@ -28,4 +28,10 @@ public interface RoleService {
      */
     Role create(String name, Collection<Role> parents);
 
+    /**
+     * Check if granted role has access to needed role permissions
+     * If granted is null default role is used instead
+     */
+    boolean hasAccess(@NonNull Role needed, Role granted);
+
 }
