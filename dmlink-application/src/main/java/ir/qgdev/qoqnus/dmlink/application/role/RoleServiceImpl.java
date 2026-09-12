@@ -1,0 +1,36 @@
+package ir.qgdev.qoqnus.dmlink.application.role;
+
+import ir.qgdev.qoqnus.dmlink.domain.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.domain.role.Role;
+import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+
+import java.util.Collection;
+import java.util.Optional;
+
+@RequiredArgsConstructor
+public class RoleServiceImpl implements RoleService {
+    private final IdGenerator idGenerator;
+    private final RoleRepository roleRepository;
+
+    @Override
+    public Role create(String name, Collection<Role> parents) {
+        Role role = Role.builder()
+                .id(idGenerator.generate())
+                .name(name)
+                .parents(parents)
+                .build();
+        return roleRepository.save(role);
+    }
+
+    @Override
+    public boolean hasAccess(@NonNull Role needed, Role granted) {
+        if (granted == null) {
+            Optional<Role> defaultRole = roleRepository.getDefaultRole();
+            if (defaultRole.isEmpty()) return false;
+            granted = defaultRole.get();
+        }
+        return needed.hasAccess(granted);
+    }
+}
