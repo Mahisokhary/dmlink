@@ -1,5 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.infrastructure.config;
 
+import ir.qgdev.qoqnus.dmlink.infrastructure.role.RoleEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +19,13 @@ public class ConfigProvider {
                     .build();
             return repo.save(entity);
         });
+    }
+
+    /**
+     * Returns default role of the service
+     */
+    public RoleEntity getDefaultRole() {
+        return get().getDefaultRole();
     }
 
 }

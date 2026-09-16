@@ -1,5 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.infrastructure.config;
 
+import ir.qgdev.qoqnus.dmlink.infrastructure.role.RoleEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -20,5 +21,12 @@ public class ConfigEntity {
      */
     @Id
     private Long id;
+
+    /**
+     * Default role of the service
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "default_role_id")
+    private RoleEntity defaultRole;
 
 }
