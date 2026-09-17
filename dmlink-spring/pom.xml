@@ -27,6 +27,7 @@
 
     <modules>
         <module>dmlink-spring-infrastructure</module>
+        <module>dmlink-spring-presentation</module>
     </modules>
 
     <properties>
