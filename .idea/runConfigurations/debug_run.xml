@@ -1,0 +1,16 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="debug run" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="ir.qgdev.qoqnus.dmlink.DmLinkSpringApplication" />
+    <module name="dmlink-spring-bootstrap" />
+    <option name="PROGRAM_PARAMETERS" value="--debug" />
+    <extension name="coverage">
+      <pattern>
+        <option name="PATTERN" value="ir.qgdev.qoqnus.dmlink.*" />
+        <option name="ENABLED" value="true" />
+      </pattern>
+    </extension>
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
