@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.application.link;
 
-import ir.qgdev.qoqnus.dmlink.domain.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.application.IdGenerator;
 import ir.qgdev.qoqnus.dmlink.domain.link.Link;
 import ir.qgdev.qoqnus.dmlink.domain.link.LinkRepository;
 import ir.qgdev.qoqnus.dmlink.domain.url.HttpUrl;

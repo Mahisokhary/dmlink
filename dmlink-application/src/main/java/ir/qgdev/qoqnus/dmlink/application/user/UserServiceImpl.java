@@ -1,7 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.application.user;
 
 import ir.qgdev.qoqnus.dmlink.application.crypto.PasswordHasher;
-import ir.qgdev.qoqnus.dmlink.domain.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.application.IdGenerator;
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
 import ir.qgdev.qoqnus.dmlink.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;

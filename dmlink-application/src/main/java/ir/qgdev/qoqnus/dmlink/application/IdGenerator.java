@@ -1,4 +1,4 @@
-package ir.qgdev.qoqnus.dmlink.domain;
+package ir.qgdev.qoqnus.dmlink.application;
 
 /**
  * An Id generator

@@ -2,7 +2,7 @@ package ir.qgdev.qoqnus.dmlink.infrastructure.role;
 
 import ir.qgdev.qoqnus.dmlink.application.role.RoleService;
 import ir.qgdev.qoqnus.dmlink.application.role.RoleServiceImpl;
-import ir.qgdev.qoqnus.dmlink.domain.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.application.IdGenerator;
 import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

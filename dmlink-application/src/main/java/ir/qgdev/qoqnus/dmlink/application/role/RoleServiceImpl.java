@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.application.role;
 
-import ir.qgdev.qoqnus.dmlink.domain.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.application.IdGenerator;
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
 import lombok.NonNull;

@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.infrastructure;
 
-import ir.qgdev.qoqnus.dmlink.domain.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.application.IdGenerator;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
