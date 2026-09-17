@@ -7,6 +7,9 @@ target/
 
 # Interlij IDEA
 *.iml
+.idea/*
+!.idea/
+!.idea/runConfigurations
 
 # Included
 !./.gitignore
