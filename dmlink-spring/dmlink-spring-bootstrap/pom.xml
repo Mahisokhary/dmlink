@@ -46,6 +46,11 @@
                     <artifactId>spring-boot-starter-tomcat</artifactId>
                 </dependency>
 
+                <!-- Spring Boot Devtools -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-devtools</artifactId>
+                </dependency>
             </dependencies>
         </profile>
 
