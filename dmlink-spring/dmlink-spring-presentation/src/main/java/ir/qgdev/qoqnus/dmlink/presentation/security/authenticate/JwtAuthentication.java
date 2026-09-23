@@ -1,5 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
 
+import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.domain.session.Session;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -26,10 +27,10 @@ public final class JwtAuthentication implements Authentication {
         return new JwtAuthentication(false, null, null, jwt);
     }
 
-    public static JwtAuthentication fromSession(Session  session) {
-        Collection<RoleGrantedAuthority> authorities = session.getRole() == null
+    public static JwtAuthentication fromSession(Session  session, @Nullable Role grantedRole) {
+        Collection<RoleGrantedAuthority> authorities = grantedRole == null
                 ? Collections.emptySet()
-                : Collections.singleton(new RoleGrantedAuthority(session.getRole()));
+                : Collections.singleton(new RoleGrantedAuthority(grantedRole));
         return new JwtAuthentication(true, session, authorities, null);
     }
 

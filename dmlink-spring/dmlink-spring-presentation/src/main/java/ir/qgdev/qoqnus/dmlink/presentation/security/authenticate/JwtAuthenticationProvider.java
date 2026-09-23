@@ -1,5 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
 
+import ir.qgdev.qoqnus.dmlink.domain.role.Role;
+import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
 import ir.qgdev.qoqnus.dmlink.domain.session.Session;
 import ir.qgdev.qoqnus.dmlink.domain.session.SessionRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.stereotype.Component;
 public class JwtAuthenticationProvider implements AuthenticationProvider {
     private final JwtService jwtService;
     private final SessionRepository sessionRepository;
+    private final RoleRepository roleRepository;
 
     @Override
     public @Nullable Authentication authenticate(@NonNull Authentication authentication) throws AuthenticationException {
@@ -27,7 +30,9 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
                 String credentials = token.getCredentials();
                 Long sessionId = Long.parseLong(jwtService.verifyAndFetchId(credentials));
                 Session session = sessionRepository.findById(sessionId).orElseThrow();
-                return JwtAuthentication.fromSession(session);
+                Role grantedRole = session.getRole();
+                if (grantedRole == null) grantedRole = roleRepository.getDefaultRole().orElse(null);
+                return JwtAuthentication.fromSession(session, grantedRole);
             } catch (Exception e) {
                 throw new BadCredentialsException("Invalid jwt");
             }
