@@ -2,6 +2,7 @@ package ir.qgdev.qoqnus.dmlink.presentation.user;
 
 import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.JwtAuthenticationHelper;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +20,7 @@ public class UserSecurityConfiguration {
                 .with(new ApiEndpointSecurityConfigurer())
                 .securityMatcher("/api/user/**")
                 .authorizeHttpRequests(auth->auth
+                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/user/", "username")).hasAnyRole("USER_GET_USERNAME")
                         .requestMatchers(HttpMethod.POST, "/api/user/").hasAnyRole("USER_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/user/").hasAnyRole("USER_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/user/*").hasAnyRole("USER_GET")
