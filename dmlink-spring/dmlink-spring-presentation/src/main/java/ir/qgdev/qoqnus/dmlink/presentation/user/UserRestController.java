@@ -50,4 +50,14 @@ public class UserRestController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with given username not found"));
     }
 
+    @PutMapping("/{id}")
+    public UserDto modify(@PathVariable("id") Long id, @RequestBody UserCreateRequestDto req) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with given id not found"));
+        user.setUsername(req.username());
+        user.setDisplayName(req.displayName());
+        userService.changePassword(user, req.password());
+        return new UserDto(userRepository.save(user));
+    }
+
 }
