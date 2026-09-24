@@ -25,6 +25,7 @@ public class UserSecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/user/").hasAnyRole("USER_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/user/*").hasAnyRole("USER_GET")
                         .requestMatchers(HttpMethod.PUT, "/api/user/*").hasAnyRole("USER_MODIFY")
+                        .requestMatchers(HttpMethod.DELETE, "/api/user/*").hasAnyRole("USER_DELETE")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
