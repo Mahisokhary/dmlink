@@ -56,4 +56,27 @@ public class UserRestControllerTest {
         assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
     }
 
+    @Test
+    @WithMockUser(roles = "USER_GET_ALL")
+    @Order(1)
+    public void testGetAll() throws Exception {
+        MockHttpServletRequestBuilder requestBuilder = get("/api/user/")
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        UserDto[] userDtoList = objectMapper.readValue(content, UserDto[].class);
+        assertEquals("Expected have exactly 1 value", 1, userDtoList.length);
+
+        UserDto userDto = userDtoList[0];
+        assertEquals("Username differs from saved username", USERNAME, userDto.username());
+        assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
+    }
+
 }
