@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collection;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
@@ -25,6 +27,13 @@ public class UserRestController {
         }
         User user = userService.create(req.username(), req.displayName(), req.password());
         return new ResponseEntity<>(new UserDto(user), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/")
+    public Collection<UserDto> getAll() {
+        return userRepository.findAll().stream()
+                .map(UserDto::new)
+                .toList();
     }
 
 }
