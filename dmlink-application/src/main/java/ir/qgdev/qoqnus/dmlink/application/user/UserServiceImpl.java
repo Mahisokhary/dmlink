@@ -35,7 +35,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void changePassword(User user, String newPassword) {
         user.setPassword(passwordHasher.hash(newPassword));
-        userRepository.save(user);
     }
 
     @Override
