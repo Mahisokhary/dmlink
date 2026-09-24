@@ -21,6 +21,7 @@ public class UserSecurityConfiguration {
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(HttpMethod.POST, "/api/user/").hasAnyRole("USER_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/user/").hasAnyRole("USER_GET_ALL")
+                        .requestMatchers(HttpMethod.GET, "/api/user/*").hasAnyRole("USER_GET")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
