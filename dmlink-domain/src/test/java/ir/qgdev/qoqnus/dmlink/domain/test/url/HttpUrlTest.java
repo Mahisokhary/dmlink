@@ -1,9 +1,9 @@
 package ir.qgdev.qoqnus.dmlink.domain.test.url;
 
 import ir.qgdev.qoqnus.dmlink.domain.url.HttpUrl;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class HttpUrlTest {
     private void testHttpUrlFromString(String s) {
