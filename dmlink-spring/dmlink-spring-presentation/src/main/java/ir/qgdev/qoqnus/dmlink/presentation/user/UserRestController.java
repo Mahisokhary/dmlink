@@ -43,4 +43,11 @@ public class UserRestController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with given id not found"));
     }
 
+    @GetMapping(value = "/", params = "username")
+    public UserDto getByUsername(@RequestParam("username") String username) {
+        return userRepository.findByUsername(username)
+                .map(UserDto::new)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with given username not found"));
+    }
+
 }
