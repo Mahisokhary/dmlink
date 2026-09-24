@@ -36,4 +36,11 @@ public class UserRestController {
                 .toList();
     }
 
+    @GetMapping("/{id}")
+    public UserDto get(@PathVariable("id") Long id) {
+        return userRepository.findById(id)
+                .map(UserDto::new)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with given id not found"));
+    }
+
 }
