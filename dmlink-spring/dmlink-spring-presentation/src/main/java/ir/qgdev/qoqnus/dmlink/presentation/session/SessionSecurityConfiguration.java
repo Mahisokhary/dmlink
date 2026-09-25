@@ -19,6 +19,7 @@ public class SessionSecurityConfiguration {
                 .securityMatcher("/api/session/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/session/").hasAnyRole("SESSION_CREATE")
+                        .requestMatchers(HttpMethod.GET, "/api/session/").hasAnyRole("SESSION_GET_ALL")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
