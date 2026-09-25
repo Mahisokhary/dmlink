@@ -27,8 +27,7 @@ import static ir.qgdev.qoqnus.dmlink.presentation.test.session.SessionTestConsta
 import static ir.qgdev.qoqnus.dmlink.presentation.test.session.SessionTestConstants.USERNAME;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -129,6 +128,25 @@ public class SessionRestControllerTest {
         SessionDto sessionDto = objectMapper.readValue(content, SessionDto.class);
         assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
         assertEquals("User differs from saved user", user.getId(), sessionDto.user().id());
+    }
+
+    @Test
+    @WithMockUser(roles = { "SESSION_DELETE", "SESSION_GET" })
+    public void testDelete() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+        Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
+
+        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/api/session/{id}", session.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult deleteMvcResult = mockMvc.perform(deleteRequestBuilder)
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        MockHttpServletRequestBuilder getRequestBuilder = get("/api/session/{id}", session.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult getMvcResult = mockMvc.perform(getRequestBuilder)
+                .andExpect(status().isNotFound())
+                .andReturn();
     }
 
 }
