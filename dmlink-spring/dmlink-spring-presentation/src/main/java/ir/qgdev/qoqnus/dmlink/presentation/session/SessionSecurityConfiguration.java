@@ -21,6 +21,7 @@ public class SessionSecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/session/").hasAnyRole("SESSION_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/session/").hasAnyRole("SESSION_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/session/*").hasAnyRole("SESSION_GET")
+                        .requestMatchers(HttpMethod.DELETE, "/api/session/*").hasAnyRole("SESSION_DELETE")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
