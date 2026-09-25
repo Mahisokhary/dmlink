@@ -110,4 +110,25 @@ public class SessionRestControllerTest {
         assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
     }
 
+    @Test
+    @WithMockUser(roles = "SESSION_GET")
+    public void testGet() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+        Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/session/{id}", session.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        SessionDto sessionDto = objectMapper.readValue(content, SessionDto.class);
+        assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
+        assertEquals("User differs from saved user", user.getId(), sessionDto.user().id());
+    }
+
 }
