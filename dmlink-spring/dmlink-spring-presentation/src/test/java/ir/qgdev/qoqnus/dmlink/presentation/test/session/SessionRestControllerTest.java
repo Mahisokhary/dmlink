@@ -1,10 +1,13 @@
 package ir.qgdev.qoqnus.dmlink.presentation.test.session;
 
+import ir.qgdev.qoqnus.dmlink.application.session.SessionService;
 import ir.qgdev.qoqnus.dmlink.application.user.UserService;
+import ir.qgdev.qoqnus.dmlink.domain.session.Session;
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.JwtService;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionCreateRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionCreateResponseDto;
+import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionDto;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -25,6 +28,7 @@ import static ir.qgdev.qoqnus.dmlink.presentation.test.session.SessionTestConsta
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,6 +51,9 @@ public class SessionRestControllerTest {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private SessionService sessionService;
 
     @Test
     @WithMockUser(roles = "SESSION_CREATE")
@@ -78,6 +85,29 @@ public class SessionRestControllerTest {
         MvcResult wrongMvcResult = mockMvc.perform(wrongRequestBuilder)
                 .andExpect(status().isBadRequest())
                 .andReturn();
+    }
+
+    @Test
+    @WithMockUser(roles = "SESSION_GET_ALL")
+    public void testGetAll() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+        Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/session/")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        SessionDto[] sessionDtos = objectMapper.readValue(content, SessionDto[].class);
+        assertEquals("Expected have exactly 1 value", 1, sessionDtos.length);
+
+        SessionDto sessionDto = sessionDtos[0];
+        assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
     }
 
 }
