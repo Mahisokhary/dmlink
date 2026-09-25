@@ -2,6 +2,8 @@ package ir.qgdev.qoqnus.dmlink.application.user;
 
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
 
+import java.util.Optional;
+
 /**
  * User Service
  */
@@ -36,5 +38,14 @@ public interface UserService {
      * Checks if given password is password of the given user
      */
     boolean verifyPassword(User user, String password);
+
+
+    /**
+     * Get user by its username and password
+     * @param username Username of the user
+     * @param password Raw password of the user
+     * @return Optional that contains the user (if user exists)
+     */
+    Optional<User> getByUsernamePassword(String username, String password);
 
 }

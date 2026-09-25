@@ -6,6 +6,8 @@ import ir.qgdev.qoqnus.dmlink.domain.user.User;
 import ir.qgdev.qoqnus.dmlink.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 
+import java.util.Optional;
+
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final IdGenerator idGenerator;
@@ -41,4 +43,11 @@ public class UserServiceImpl implements UserService {
     public boolean verifyPassword(User user, String password) {
         return passwordHasher.verify(user.getPassword(), password);
     }
+
+    @Override
+    public Optional<User> getByUsernamePassword(String username, String password) {
+        return userRepository.findByUsername(username)
+                .filter(u -> verifyPassword(u, password));
+    }
+
 }
