@@ -21,8 +21,7 @@ import tools.jackson.databind.ObjectMapper;
 import static ir.qgdev.qoqnus.dmlink.presentation.test.user.UserTestConstants.*;
 import static org.springframework.test.util.AssertionErrors.assertEquals;
 import static org.springframework.test.util.AssertionErrors.assertNotNull;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -132,6 +131,31 @@ public class UserRestControllerTest {
         UserDto userDto = objectMapper.readValue(content, UserDto.class);
         assertEquals("Username differs from saved username", USERNAME, userDto.username());
         assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
+        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER_MODIFY")
+    public void testModify() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+
+        UserCreateRequestDto requestDto = new UserCreateRequestDto(USERNAME2, DISPLAY_NAME2, PASSWORD);
+        MockHttpServletRequestBuilder requestBuilder = put("/api/user/{id}", user.getId())
+                .content(objectMapper.writeValueAsBytes(requestDto))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        UserDto userDto = objectMapper.readValue(content, UserDto.class);
+        assertEquals("Username differs from modified username", USERNAME2, userDto.username());
+        assertEquals("Display name differs from modified username", DISPLAY_NAME2, userDto.displayName());
         assertEquals("ID differs from saved ID", user.getId(), userDto.id());
     }
 
