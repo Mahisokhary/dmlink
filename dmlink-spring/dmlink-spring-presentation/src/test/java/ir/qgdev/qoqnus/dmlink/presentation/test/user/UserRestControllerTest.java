@@ -1,31 +1,38 @@
 package ir.qgdev.qoqnus.dmlink.presentation.test.user;
 
+import ir.qgdev.qoqnus.dmlink.application.user.UserService;
+import ir.qgdev.qoqnus.dmlink.domain.user.User;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
 import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserCreateRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserDto;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
-
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
 
 import static ir.qgdev.qoqnus.dmlink.presentation.test.user.UserTestConstants.*;
-import static org.springframework.test.util.AssertionErrors.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.util.AssertionErrors.assertEquals;
+import static org.springframework.test.util.AssertionErrors.assertNotNull;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Tests for {@link ir.qgdev.qoqnus.dmlink.presentation.user.UserRestController}
  */
 @SpringBootTest(classes = PresentationTestApplication.class)
 @AutoConfigureMockMvc
+@Transactional
+@Rollback
 public class UserRestControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -33,9 +40,11 @@ public class UserRestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private UserService userService;
+
     @Test
     @WithMockUser(roles = "USER_CREATE")
-    @Order(0)
     public void testCreate() throws Exception {
         UserCreateRequestDto body = new UserCreateRequestDto(USERNAME, DISPLAY_NAME, PASSWORD);
         MockHttpServletRequestBuilder requestBuilder = post("/api/user/")
@@ -58,8 +67,9 @@ public class UserRestControllerTest {
 
     @Test
     @WithMockUser(roles = "USER_GET_ALL")
-    @Order(1)
     public void testGetAll() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+
         MockHttpServletRequestBuilder requestBuilder = get("/api/user/")
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -77,6 +87,7 @@ public class UserRestControllerTest {
         UserDto userDto = userDtoList[0];
         assertEquals("Username differs from saved username", USERNAME, userDto.username());
         assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
+        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
     }
 
 }
