@@ -4,6 +4,8 @@ import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.domain.session.Session;
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
 
+import java.util.Optional;
+
 /**
  * Session Service
  */
@@ -24,5 +26,13 @@ public interface SessionService {
      * @return create session
      */
     Session create(User user, Role role);
+
+    /**
+     * Validates username and password and create a new session
+     * @param username Username of the user the session should be created for
+     * @param password Password of the user the session should be created for
+     * @return Optional containing created session (if username password is correct)
+     */
+    Optional<Session> login(String username, String password);
 
 }
