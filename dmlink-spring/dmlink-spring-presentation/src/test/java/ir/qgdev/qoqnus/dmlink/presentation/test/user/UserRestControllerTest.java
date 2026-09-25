@@ -112,4 +112,27 @@ public class UserRestControllerTest {
         assertEquals("ID differs from saved ID", user.getId(), userDto.id());
     }
 
+    @Test
+    @WithMockUser(roles = "USER_GET_USERNAME")
+    public void testGetByUsername() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/user/")
+                .param("username", USERNAME)
+                .accept(MediaType.APPLICATION_JSON);
+
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        UserDto userDto = objectMapper.readValue(content, UserDto.class);
+        assertEquals("Username differs from saved username", USERNAME, userDto.username());
+        assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
+        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
+    }
+
 }
