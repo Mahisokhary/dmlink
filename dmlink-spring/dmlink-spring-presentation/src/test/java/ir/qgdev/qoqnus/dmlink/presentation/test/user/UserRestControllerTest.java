@@ -159,4 +159,21 @@ public class UserRestControllerTest {
         assertEquals("ID differs from saved ID", user.getId(), userDto.id());
     }
 
+    @Test
+    @WithMockUser(roles = { "USER_DELETE", "USER_GET" })
+    public void testDelete() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+
+        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/api/user/{id}", user.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult deleteMvcResult = mockMvc.perform(deleteRequestBuilder)
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        MockHttpServletRequestBuilder getRequestBuilder = get("/api/user/{id}", user.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult getMvcResult = mockMvc.perform(getRequestBuilder)
+                .andExpect(status().isNotFound())
+                .andReturn();
+    }
 }
