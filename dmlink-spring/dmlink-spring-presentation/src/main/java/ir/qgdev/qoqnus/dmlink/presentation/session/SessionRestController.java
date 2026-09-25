@@ -39,4 +39,11 @@ public class SessionRestController {
                 .toList();
     }
 
+    @GetMapping("/{id}")
+    public SessionDto get(@PathVariable("id") Long id) {
+        Session session = sessionRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Session with given id not found"));
+        return new SessionDto(session);
+    }
+
 }
