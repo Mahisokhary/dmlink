@@ -74,7 +74,7 @@ public class SessionRestControllerTest {
 
         SessionCreateResponseDto res = objectMapper.readValue(content, SessionCreateResponseDto.class);
         assertEquals("Incorrect JWT is returned", res.session().id().toString(), jwtService.verifyAndFetchId(res.token()));
-        assertEquals("Incorrect user is owner oof the session", user.getId(), res.session().user().id());
+        assertEquals("Incorrect user is owner oof the session", user.getId(), res.session().user());
 
         SessionCreateRequestDto wrongBody = new SessionCreateRequestDto(USERNAME, PASSWORD + "WRONG PASSWORD");
         MockHttpServletRequestBuilder wrongRequestBuilder = post("/api/session/")
@@ -127,7 +127,7 @@ public class SessionRestControllerTest {
 
         SessionDto sessionDto = objectMapper.readValue(content, SessionDto.class);
         assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
-        assertEquals("User differs from saved user", user.getId(), sessionDto.user().id());
+        assertEquals("User differs from saved user", user.getId(), sessionDto.user());
     }
 
     @Test
