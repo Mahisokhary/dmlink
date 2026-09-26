@@ -1,4 +1,4 @@
-package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
+package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt;
 
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;

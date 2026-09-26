@@ -4,7 +4,7 @@ import ir.qgdev.qoqnus.dmlink.application.session.SessionService;
 import ir.qgdev.qoqnus.dmlink.application.user.UserService;
 import ir.qgdev.qoqnus.dmlink.domain.session.Session;
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
-import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.JwtService;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtService;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionCreateRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionCreateResponseDto;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionDto;

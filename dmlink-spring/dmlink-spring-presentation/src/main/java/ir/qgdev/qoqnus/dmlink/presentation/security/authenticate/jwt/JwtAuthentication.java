@@ -1,7 +1,8 @@
-package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
+package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt;
 
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.domain.session.Session;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.RoleGrantedAuthority;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

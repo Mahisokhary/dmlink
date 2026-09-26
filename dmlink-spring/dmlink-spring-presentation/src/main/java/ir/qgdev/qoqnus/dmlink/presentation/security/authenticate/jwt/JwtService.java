@@ -1,4 +1,4 @@
-package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
+package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt;
 
 /**
  * Provides methods to create and verify JSON Web Tokens

@@ -1,7 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.user;
 
 import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
-import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.JwtAuthenticationHelper;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +14,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class UserSecurityConfiguration {
     @Bean
     @Order(0)
-    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http, JwtAuthenticationHelper jwtFilter) {
+    public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) {
         return http
                 .with(new ApiEndpointSecurityConfigurer())
                 .securityMatcher("/api/user/**")

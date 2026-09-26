@@ -1,4 +1,4 @@
-package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
+package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt;
 
 import org.springframework.context.ApplicationContext;
 import org.springframework.security.authentication.AuthenticationManager;

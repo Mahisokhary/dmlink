@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.security;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.JwtSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 

@@ -1,4 +1,4 @@
-package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
+package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
