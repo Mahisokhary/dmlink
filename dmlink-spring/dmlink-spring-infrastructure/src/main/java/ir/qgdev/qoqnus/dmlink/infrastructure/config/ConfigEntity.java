@@ -29,4 +29,11 @@ public class ConfigEntity {
     @JoinColumn(name = "default_role_id")
     private RoleEntity defaultRole;
 
+    /**
+     * Default role of the system for anonymous users
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "anonymous_role_id")
+    private RoleEntity anonymousRole;
+
 }
