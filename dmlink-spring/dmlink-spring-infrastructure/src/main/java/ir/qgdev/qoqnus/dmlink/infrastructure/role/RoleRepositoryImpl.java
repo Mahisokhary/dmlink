@@ -27,6 +27,11 @@ public class RoleRepositoryImpl implements RoleRepository {
     }
 
     @Override
+    public Optional<Role> getAnonymousRole() {
+        return Optional.ofNullable(mapper.toDomain(config.getAnonymousRole()));
+    }
+
+    @Override
     public Optional<Role> findById(Long id) {
         return repo.findById(id).map(mapper::toDomain);
     }

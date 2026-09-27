@@ -20,4 +20,9 @@ public interface RoleRepository extends Repository<Role, Long> {
      */
     Optional<Role> getDefaultRole();
 
+    /**
+     * Returns the role that should be assigned to anonymous users
+     */
+    Optional<Role> getAnonymousRole();
+
 }
