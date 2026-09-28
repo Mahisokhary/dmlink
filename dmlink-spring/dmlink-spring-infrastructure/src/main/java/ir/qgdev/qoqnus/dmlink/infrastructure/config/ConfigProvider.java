@@ -28,4 +28,11 @@ public class ConfigProvider {
         return get().getDefaultRole();
     }
 
+    /**
+     * Returns default role of the system for anonymous users
+     */
+    public RoleEntity getAnonymousRole() {
+        return get().getAnonymousRole();
+    }
+
 }

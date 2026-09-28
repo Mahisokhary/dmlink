@@ -1,6 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.presentation.security;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.JwtSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.anonymous.AnonymousConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
@@ -12,6 +13,7 @@ public class ApiEndpointSecurityConfigurer extends AbstractHttpConfigurer<ApiEnd
     public void init(HttpSecurity http) {
         http
                 .with(new RestSecurityConfigurer())
+                .with(new AnonymousConfigurer())
                 .with(new JwtSecurityConfigurer());
     }
 }
