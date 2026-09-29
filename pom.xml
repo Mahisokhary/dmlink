@@ -58,6 +58,9 @@
     <profiles>
         <profile>
             <id>spring</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
         </profile>
     </profiles>
 
