@@ -18,11 +18,13 @@ public class Session extends Entity {
     /**
      * Unique not-modifiable ID of the session
      */
+    @NonNull
     Long id;
 
     /**
      * Session owner
      */
+    @NonNull
     User user;
 
     /**

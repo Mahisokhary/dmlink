@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Roles of a user determines what the use is permitted to do
@@ -19,17 +18,20 @@ public class Role extends Entity {
     /**
      * Unique id of the role
      */
+    @NonNull
     Long id;
 
     /**
      * Unique name of the role
      */
+    @NonNull
     String name;
 
     /**
      * Parents of the role
      * All permission from parents are passed to the child
      */
+    @NonNull
     Collection<Role> parents;
 
     /**
