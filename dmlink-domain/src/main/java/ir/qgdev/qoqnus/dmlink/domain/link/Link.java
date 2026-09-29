@@ -18,16 +18,19 @@ public class Link extends Entity {
     /**
      * Unique not-modifiable ID of the user
      */
+    @NonNull
     Long id;
 
     /**
      * Unique name of the link
      */
+    @NonNull
     String name;
 
     /**
      * Target url of the link
      */
+    @NonNull
     HttpUrl target;
 
     /**

@@ -17,12 +17,14 @@ public class User extends Entity {
     /**
      * Unique not-modifiable ID of the user
      */
+    @NonNull
     Long id;
 
     /**
      * Unique username of the user
      * Can only contain: a-z 0-9 and _
      */
+    @NonNull
     String username;
 
     /**
@@ -33,6 +35,7 @@ public class User extends Entity {
     /**
      * Hashed password of the user
      */
+    @NonNull
     String password;
 
     /**

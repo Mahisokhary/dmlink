@@ -24,7 +24,7 @@ public class LinkEntity {
     @Column(nullable = false)
     HttpUrl target;
 
-    @ManyToOne(optional = false)
+    @ManyToOne
     @JoinColumn(name = "owner_id")
     UserEntity owner;
 }
