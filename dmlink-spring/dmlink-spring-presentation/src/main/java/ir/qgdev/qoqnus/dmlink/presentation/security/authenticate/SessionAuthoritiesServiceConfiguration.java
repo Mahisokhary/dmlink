@@ -19,6 +19,7 @@ import java.util.Set;
 @Configuration
 public class SessionAuthoritiesServiceConfiguration {
     private final Collection<? extends GrantedAuthority> devSessionAuthorities = Set.of(
+            new SimpleGrantedAuthority("ROLE_SESSION_GET_SELF")
     );
 
     private final RoleRepository roleRepository;
