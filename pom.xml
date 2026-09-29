@@ -55,4 +55,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>spring</id>
+        </profile>
+    </profiles>
+
 </project>
