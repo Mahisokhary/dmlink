@@ -20,6 +20,7 @@ public class UserSecurityConfiguration {
                 .securityMatcher("/api/user/**")
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/user/", "username")).hasAnyRole("USER_GET_USERNAME")
+                        .requestMatchers(HttpMethod.GET, "/api/user/@me").hasAnyRole("USER_GET_SELF")
                         .requestMatchers(HttpMethod.POST, "/api/user/").hasAnyRole("USER_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/user/").hasAnyRole("USER_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/user/*").hasAnyRole("USER_GET")
