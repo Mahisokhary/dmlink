@@ -75,4 +75,22 @@ public class SessionSelfRestControllerTest {
         assertEquals("User differs from passed user", user.getId(), sessionDto.user());
     }
 
+    @Test
+    public void testDelete() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+        Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
+        Collection<GrantedAuthority> authorities = Set.of(
+                new SimpleGrantedAuthority("ROLE_SESSION_DELETE_SELF")
+        );
+
+        MockHttpServletRequestBuilder requestBuilder = delete("/api/session/@me")
+                .with(authentication(JwtAuthentication.fromSession(session, authorities)))
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isNoContent())
+                .andReturn();
+
+        assertTrue("Session is not deleted", sessionRepository.findById(session.getId()).isEmpty());
+    }
+
 }
