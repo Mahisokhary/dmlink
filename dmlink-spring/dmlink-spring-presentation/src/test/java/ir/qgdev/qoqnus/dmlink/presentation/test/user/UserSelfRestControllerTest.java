@@ -2,14 +2,33 @@ package ir.qgdev.qoqnus.dmlink.presentation.test.user;
 
 import ir.qgdev.qoqnus.dmlink.application.session.SessionService;
 import ir.qgdev.qoqnus.dmlink.application.user.UserService;
+import ir.qgdev.qoqnus.dmlink.domain.session.Session;
+import ir.qgdev.qoqnus.dmlink.domain.user.User;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtAuthentication;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
+import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserDto;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
+
+import java.util.Collection;
+import java.util.Set;
+
+import static ir.qgdev.qoqnus.dmlink.presentation.test.user.UserTestConstants.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.util.AssertionErrors.*;
 
 @SpringBootTest(classes = PresentationTestApplication.class)
 @AutoConfigureMockMvc
@@ -27,5 +46,29 @@ public class UserSelfRestControllerTest {
 
     @Autowired
     public SessionService sessionService;
+
+    @Test
+    public void testGet() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+        Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
+        Collection<GrantedAuthority> authorities = Set.of(
+                new SimpleGrantedAuthority("ROLE_USER_GET_SELF")
+        );
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/user/@me")
+                .with(authentication(JwtAuthentication.fromSession(session, authorities)))
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        UserDto userDto = objectMapper.readValue(content, UserDto.class);
+        assertEquals("ID differs from passed ID", user.getId(), userDto.id());
+        assertEquals("Username differs from passed username", USERNAME, userDto.username());
+    }
 
 }
