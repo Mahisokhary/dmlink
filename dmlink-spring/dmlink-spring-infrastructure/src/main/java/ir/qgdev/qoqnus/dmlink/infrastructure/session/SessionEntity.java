@@ -21,7 +21,7 @@ public class SessionEntity {
     @Column(unique = true, nullable = false, updatable = false)
     Long id;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     UserEntity user;
 
