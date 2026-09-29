@@ -12,7 +12,6 @@
     <modules>
         <module>dmlink-domain</module>
         <module>dmlink-application</module>
-        <module>dmlink-spring</module>
     </modules>
 
     <dependencies>
@@ -61,6 +60,9 @@
             <activation>
                 <activeByDefault>true</activeByDefault>
             </activation>
+            <modules>
+                <module>dmlink-spring</module>
+            </modules>
         </profile>
     </profiles>
 
