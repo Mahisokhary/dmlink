@@ -18,6 +18,8 @@ public class SessionSecurityConfiguration {
                 .with(new ApiEndpointSecurityConfigurer())
                 .securityMatcher("/api/session/**")
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/api/session/@me").hasAnyRole("SESSION_GET_SELF")
+                        .requestMatchers(HttpMethod.DELETE, "/api/session/@me").hasAnyRole("SESSION_DELETE_SELF")
                         .requestMatchers(HttpMethod.POST, "/api/session/").hasAnyRole("SESSION_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/session/").hasAnyRole("SESSION_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/session/*").hasAnyRole("SESSION_GET")
