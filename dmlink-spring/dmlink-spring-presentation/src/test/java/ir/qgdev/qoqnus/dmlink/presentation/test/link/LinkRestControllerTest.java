@@ -2,6 +2,7 @@ package ir.qgdev.qoqnus.dmlink.presentation.test.link;
 
 import ir.qgdev.qoqnus.dmlink.application.link.LinkService;
 import ir.qgdev.qoqnus.dmlink.domain.link.Link;
+import ir.qgdev.qoqnus.dmlink.domain.link.LinkRepository;
 import ir.qgdev.qoqnus.dmlink.domain.url.HttpUrl;
 import ir.qgdev.qoqnus.dmlink.presentation.link.dto.LinkCreateRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.link.dto.LinkDto;
@@ -40,6 +41,9 @@ public class LinkRestControllerTest {
 
     @Autowired
     private LinkService linkService;
+
+    @Autowired
+    private LinkRepository linkRepository;
 
     @Test
     @WithMockUser(roles = "LINK_CREATE")
@@ -157,6 +161,21 @@ public class LinkRestControllerTest {
         assertEquals("Target is different from saved target", TARGET2, HttpUrl.fromString(linkDto.target()));
         assertEquals("Name is different from saved name", NAME2, linkDto.name());
         assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
+    }
+
+    @Test
+    @WithMockUser(roles = "LINK_DELETE")
+    public void testDelete() throws Exception {
+        Link link = linkService.create(NAME, TARGET, null);
+
+        MockHttpServletRequestBuilder requestBuilder = delete("/api/link/{id}", link.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isNoContent())
+                .andExpect(content().bytes(new byte[]{}))
+                .andReturn();
+
+        assertFalse("Link is not deleted from repository", linkRepository.findById(link.getId()).isPresent());
     }
 
 }
