@@ -1,6 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.presentation.link;
 
 import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ public class LinkSecurityConfiguration {
                 .with(new ApiEndpointSecurityConfigurer())
                 .securityMatcher("/api/link/**")
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/link/", "name")).hasAnyRole("LINK_GET_NAME")
                         .requestMatchers(HttpMethod.POST, "/api/link/").hasAnyRole("LINK_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/link/").hasAnyRole("LINK_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/link/*").hasAnyRole("LINK_GET")
