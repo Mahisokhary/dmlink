@@ -1,6 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.presentation.test.link;
 
 import ir.qgdev.qoqnus.dmlink.application.link.LinkService;
+import ir.qgdev.qoqnus.dmlink.domain.link.Link;
 import ir.qgdev.qoqnus.dmlink.domain.url.HttpUrl;
 import ir.qgdev.qoqnus.dmlink.presentation.link.dto.LinkCreateRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.link.dto.LinkDto;
@@ -61,6 +62,31 @@ public class LinkRestControllerTest {
         assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
         assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
         assertEquals("Name is different from saved name", NAME, linkDto.name());
+    }
+
+    @Test
+    @WithMockUser(roles = "LINK_GET_ALL")
+    public void testGetAll() throws Exception {
+        Link link = linkService.create(NAME, TARGET, null);
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/link/")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        LinkDto[] linkDtos = objectMapper.readValue(content, LinkDto[].class);
+        assertEquals("There should only be one item", 1, linkDtos.length);
+
+        LinkDto linkDto = linkDtos[0];
+        assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
+        assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
+        assertEquals("Name is different from saved name", NAME, linkDto.name());
+        assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
     }
 
 }
