@@ -51,4 +51,13 @@ public class LinkRestController {
         return new LinkDto(link);
     }
 
+    @PutMapping("/{id}")
+    public LinkDto modify(@PathVariable("id") Long id, @RequestBody LinkCreateRequestDto req) {
+        Link link = linkRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Link with given id not found"));
+        link.setName(req.name());
+        link.setTarget(req.target());
+        return new LinkDto(linkRepository.save(link));
+    }
+
 }
