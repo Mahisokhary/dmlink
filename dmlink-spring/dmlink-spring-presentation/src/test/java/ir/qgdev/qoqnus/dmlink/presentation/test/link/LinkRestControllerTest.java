@@ -111,4 +111,27 @@ public class LinkRestControllerTest {
         assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
     }
 
+    @Test
+    @WithMockUser(roles = "LINK_GET_NAME")
+    public void testGetByName() throws Exception {
+        Link link = linkService.create(NAME, TARGET, null);
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/link/")
+                .queryParam("name", NAME)
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        LinkDto linkDto = objectMapper.readValue(content, LinkDto.class);
+        assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
+        assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
+        assertEquals("Name is different from saved name", NAME, linkDto.name());
+        assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
+    }
+
 }
