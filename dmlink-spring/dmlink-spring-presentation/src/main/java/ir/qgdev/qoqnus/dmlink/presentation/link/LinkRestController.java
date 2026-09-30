@@ -44,4 +44,11 @@ public class LinkRestController {
         return new LinkDto(link);
     }
 
+    @GetMapping(value = "/", params = "name")
+    public LinkDto getByName(@RequestParam("name") String name) {
+        Link link = linkRepository.findByName(name)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Link with given name not found"));
+        return new LinkDto(link);
+    }
+
 }
