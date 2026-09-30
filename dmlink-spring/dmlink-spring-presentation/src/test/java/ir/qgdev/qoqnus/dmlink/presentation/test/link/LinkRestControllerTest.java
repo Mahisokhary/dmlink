@@ -1,14 +1,27 @@
 package ir.qgdev.qoqnus.dmlink.presentation.test.link;
 
 import ir.qgdev.qoqnus.dmlink.application.link.LinkService;
+import ir.qgdev.qoqnus.dmlink.domain.url.HttpUrl;
+import ir.qgdev.qoqnus.dmlink.presentation.link.dto.LinkCreateRequestDto;
+import ir.qgdev.qoqnus.dmlink.presentation.link.dto.LinkDto;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.ObjectMapper;
+
+import static ir.qgdev.qoqnus.dmlink.presentation.test.link.LinkTestConstants.*;
+import static org.springframework.test.util.AssertionErrors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 /**
  * Tests for {@link ir.qgdev.qoqnus.dmlink.presentation.link.LinkRestController}
@@ -26,5 +39,28 @@ public class LinkRestControllerTest {
 
     @Autowired
     private LinkService linkService;
+
+    @Test
+    @WithMockUser(roles = "LINK_CREATE")
+    public void testCreate() throws Exception {
+        LinkCreateRequestDto req = new LinkCreateRequestDto(NAME, TARGET);
+
+        MockHttpServletRequestBuilder requestBuilder = post("/api/link/")
+                .content(objectMapper.writeValueAsBytes(req))
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isCreated())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        LinkDto linkDto = objectMapper.readValue(content, LinkDto.class);
+        assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
+        assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
+        assertEquals("Name is different from saved name", NAME, linkDto.name());
+    }
 
 }
