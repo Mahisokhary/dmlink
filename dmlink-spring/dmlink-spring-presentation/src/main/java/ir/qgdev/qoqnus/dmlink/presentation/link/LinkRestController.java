@@ -13,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collection;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/link")
@@ -25,6 +27,13 @@ public class LinkRestController {
         User owner = session != null ? session.getUser() : null;
         Link link = linkService.create(req.name(), req.target(), owner);
         return new ResponseEntity<>(new LinkDto(link), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/")
+    public Collection<LinkDto> getAll() {
+        return linkRepository.findAll().stream()
+                .map(LinkDto::new)
+                .toList();
     }
 
 }
