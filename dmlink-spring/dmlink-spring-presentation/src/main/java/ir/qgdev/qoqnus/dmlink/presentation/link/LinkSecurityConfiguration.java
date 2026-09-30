@@ -19,6 +19,7 @@ public class LinkSecurityConfiguration {
                 .securityMatcher("/api/link/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/link/").hasAnyRole("LINK_CREATE")
+                        .requestMatchers(HttpMethod.GET, "/api/link/").hasAnyRole("LINK_GET_ALL")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
