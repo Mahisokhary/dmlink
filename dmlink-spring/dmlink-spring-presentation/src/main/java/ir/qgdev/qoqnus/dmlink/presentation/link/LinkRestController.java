@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
 
@@ -34,6 +35,13 @@ public class LinkRestController {
         return linkRepository.findAll().stream()
                 .map(LinkDto::new)
                 .toList();
+    }
+
+    @GetMapping("/{id}")
+    public LinkDto get(@PathVariable("id") Long id) {
+        Link link = linkRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Link with given id not found"));
+        return new LinkDto(link);
     }
 
 }
