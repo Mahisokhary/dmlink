@@ -20,6 +20,7 @@ import java.util.Set;
 @Configuration
 public class AnonymousAuthoritiesServiceConfiguration {
     private final Collection<? extends GrantedAuthority> devAnonymousAuthorities = Set.of(
+            new SimpleGrantedAuthority("ROLE_LINK_GET_NAME"),
             new SimpleGrantedAuthority("ROLE_USER_CREATE"),
             new SimpleGrantedAuthority("ROLE_SESSION_CREATE")
     );
