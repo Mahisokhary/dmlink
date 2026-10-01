@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
@@ -56,6 +57,20 @@ public class RoleRestController {
         Role role = roleRepository.findByName(name)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role with given name not found"));
         return new RoleDto(role);
+    }
+
+    @PutMapping("/{id}")
+    public RoleDto modify(@PathVariable("id") Long id, @RequestBody RoleCreateRequestDto req) {
+        Collection<Role> parents = req.parents().stream()
+                .map(roleRepository::findById)
+                .map(o -> o
+                        .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parents"))
+                ).toList();
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role with given id not found"));
+        role.setName(req.name());
+        role.setParents(parents);
+        return new RoleDto(roleRepository.save(role));
     }
 
 }
