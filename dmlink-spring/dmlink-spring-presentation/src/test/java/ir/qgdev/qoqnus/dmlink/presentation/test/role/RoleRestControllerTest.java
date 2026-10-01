@@ -109,4 +109,24 @@ public class RoleRestControllerTest {
         assertEquals("ID is different from stored ID", role.getId(), roleDto.id());
     }
 
+    @Test
+    @WithMockUser(authorities = "ROLE_ROLE_GET_NAME")
+    public void testGetByName() throws Exception {
+        Role role = roleService.create(NAME);
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/role/")
+                .queryParam("name", NAME)
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        RoleDto roleDto = objectMapper.readValue(content, RoleDto.class);
+        assertEquals("ID is different from stored ID", role.getId(), roleDto.id());
+    }
+
 }
