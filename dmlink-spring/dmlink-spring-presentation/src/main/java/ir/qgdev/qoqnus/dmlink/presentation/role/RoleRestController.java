@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
@@ -32,6 +33,13 @@ public class RoleRestController {
                 ).toList();
         Role role = roleService.create(req.name(), parents);
         return new ResponseEntity<>(new RoleDto(role), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/")
+    public Collection<RoleDto> getAll() {
+        return roleRepository.findAll().stream()
+                .map(RoleDto::new)
+                .toList();
     }
 
 }
