@@ -1,6 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.presentation.role;
 
 import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ public class RoleSecurityConfiguration {
                 .with(new ApiEndpointSecurityConfigurer())
                 .securityMatcher("/api/role/**")
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/role/", "name")).hasAnyAuthority("ROLE_ROLE_GET_NAME")
                         .requestMatchers(HttpMethod.POST, "/api/role/").hasAnyAuthority("ROLE_ROLE_CREATE")
                         .requestMatchers(HttpMethod.GET, "/api/role/").hasAnyAuthority("ROLE_ROLE_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/role/*").hasAnyAuthority("ROLE_ROLE_GET")
