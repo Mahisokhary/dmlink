@@ -19,6 +19,7 @@ public class RoleSecurityConfiguration {
                 .securityMatcher("/api/role/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/role/").hasAnyAuthority("ROLE_ROLE_CREATE")
+                        .requestMatchers(HttpMethod.GET, "/api/role/").hasAnyAuthority("ROLE_ROLE_GET_ALL")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
