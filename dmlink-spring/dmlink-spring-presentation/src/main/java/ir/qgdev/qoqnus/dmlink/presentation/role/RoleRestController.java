@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
@@ -47,6 +48,13 @@ public class RoleRestController {
     public RoleDto get(@PathVariable("id") Long id) {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role with given id not found"));
+        return new RoleDto(role);
+    }
+
+    @GetMapping(value = "/", params = "name")
+    public RoleDto getByName(@RequestParam("name") String name) {
+        Role role = roleRepository.findByName(name)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role with given name not found"));
         return new RoleDto(role);
     }
 
