@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Collection;
@@ -40,6 +41,13 @@ public class RoleRestController {
         return roleRepository.findAll().stream()
                 .map(RoleDto::new)
                 .toList();
+    }
+
+    @GetMapping("/{id}")
+    public RoleDto get(@PathVariable("id") Long id) {
+        Role role = roleRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Role with given id not found"));
+        return new RoleDto(role);
     }
 
 }
