@@ -90,4 +90,23 @@ public class RoleRestControllerTest {
         assertEquals("There should only be 2 roles", 2, roleDtos.length);
     }
 
+    @Test
+    @WithMockUser(authorities = "ROLE_ROLE_GET")
+    public void testGet() throws Exception {
+        Role role = roleService.create(NAME);
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/role/{id}", role.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        RoleDto roleDto = objectMapper.readValue(content, RoleDto.class);
+        assertEquals("ID is different from stored ID", role.getId(), roleDto.id());
+    }
+
 }
