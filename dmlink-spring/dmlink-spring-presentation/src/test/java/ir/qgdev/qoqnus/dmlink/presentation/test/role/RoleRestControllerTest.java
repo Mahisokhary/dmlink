@@ -70,4 +70,24 @@ public class RoleRestControllerTest {
         assertTrue("Invalid parent for created role", roleDto.parents().contains(role.getId()));
     }
 
+    @Test
+    @WithMockUser(authorities = "ROLE_ROLE_GET_ALL")
+    public void testGetAll() throws Exception {
+        Role parent = roleService.create(NAME);
+        Role role = roleService.create(NAME2, Set.of(parent));
+
+        MockHttpServletRequestBuilder requestBuilder = get("/api/role/")
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andReturn();
+
+        byte[] content = mvcResult.getResponse().getContentAsByteArray();
+        assertNotNull("No content is returned", content);
+
+        RoleDto[] roleDtos = objectMapper.readValue(content, RoleDto[].class);
+        assertEquals("There should only be 2 roles", 2, roleDtos.length);
+    }
+
 }
