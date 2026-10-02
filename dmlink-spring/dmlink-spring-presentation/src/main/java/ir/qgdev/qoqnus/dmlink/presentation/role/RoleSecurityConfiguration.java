@@ -24,6 +24,7 @@ public class RoleSecurityConfiguration {
                         .requestMatchers(HttpMethod.GET, "/api/role/").hasAnyAuthority("ROLE_ROLE_GET_ALL")
                         .requestMatchers(HttpMethod.GET, "/api/role/*").hasAnyAuthority("ROLE_ROLE_GET")
                         .requestMatchers(HttpMethod.PUT, "/api/role/*").hasAnyAuthority("ROLE_ROLE_MODIFY")
+                        .requestMatchers(HttpMethod.DELETE, "/api/role/*").hasAnyAuthority("ROLE_ROLE_DELETE")
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
