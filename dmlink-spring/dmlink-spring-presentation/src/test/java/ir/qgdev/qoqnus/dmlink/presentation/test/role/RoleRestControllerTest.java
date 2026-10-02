@@ -152,4 +152,19 @@ public class RoleRestControllerTest {
         assertEquals("Name is different from saved name", NAME2, roleDto.name());
     }
 
+    @Test
+    @WithMockUser(authorities = "ROLE_ROLE_DELETE")
+    public void testDelete() throws Exception {
+        Role role = roleService.create(NAME);
+
+        MockHttpServletRequestBuilder requestBuilder = delete("/api/role/{id}", role.getId())
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isNoContent())
+                .andExpect(content().bytes(new byte[]{}))
+                .andReturn();
+
+        assertFalse("Role is not deleted", roleRepository.findById(role.getId()).isPresent());
+    }
+
 }
