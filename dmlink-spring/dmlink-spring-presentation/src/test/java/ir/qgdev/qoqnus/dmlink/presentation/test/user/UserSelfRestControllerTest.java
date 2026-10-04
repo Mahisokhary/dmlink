@@ -3,7 +3,10 @@ package ir.qgdev.qoqnus.dmlink.presentation.test.user;
 import ir.qgdev.qoqnus.dmlink.application.session.SessionService;
 import ir.qgdev.qoqnus.dmlink.application.user.UserService;
 import ir.qgdev.qoqnus.dmlink.domain.session.Session;
+import ir.qgdev.qoqnus.dmlink.domain.session.SessionRepository;
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
+import ir.qgdev.qoqnus.dmlink.domain.user.UserRepository;
+import ir.qgdev.qoqnus.dmlink.infrastructure.session.SessionJpaRepository;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtAuthentication;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
 import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserDto;
@@ -47,6 +50,15 @@ public class UserSelfRestControllerTest {
     @Autowired
     public SessionService sessionService;
 
+    @Autowired
+    public UserRepository userRepository;
+
+    @Autowired
+    public SessionRepository sessionRepository;
+
+    @Autowired
+    private SessionJpaRepository sessionJpaRepository;
+
     @Test
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
@@ -69,6 +81,25 @@ public class UserSelfRestControllerTest {
         UserDto userDto = objectMapper.readValue(content, UserDto.class);
         assertEquals("ID differs from passed ID", user.getId(), userDto.id());
         assertEquals("Username differs from passed username", USERNAME, userDto.username());
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
+        Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
+        Collection<GrantedAuthority> authorities = Set.of(
+                new SimpleGrantedAuthority("ROLE_USER_DELETE_SELF")
+        );
+
+        MockHttpServletRequestBuilder requestBuilder = delete("/api/user/@me")
+                .with(authentication(JwtAuthentication.fromSession(session, authorities)))
+                .accept(MediaType.APPLICATION_JSON);
+        MvcResult mvcResult = mockMvc.perform(requestBuilder)
+                .andExpect(status().isNoContent())
+                .andExpect(content().bytes(new byte[]{}))
+                .andReturn();
+
+        assertFalse("User is not deleted", userRepository.findById(user.getId()).isPresent());
     }
 
 }
