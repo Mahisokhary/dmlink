@@ -5,6 +5,8 @@ import ir.qgdev.qoqnus.dmlink.infrastructure.user.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 /**
  * JPA Entity of {@link ir.qgdev.qoqnus.dmlink.domain.session.Session}
@@ -21,6 +23,7 @@ public class SessionEntity {
     @Column(unique = true, nullable = false, updatable = false)
     Long id;
 
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @ManyToOne(optional = false)
     @JoinColumn(name = "user_id")
     UserEntity user;
