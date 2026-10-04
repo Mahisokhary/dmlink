@@ -28,10 +28,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(User user, String oldPassword, String newPassword) {
-        if (passwordHasher.verify(user.getPassword(), oldPassword)) {
-            changePassword(user, newPassword);
-        }
-        throw new IllegalArgumentException("password is wrong");
+        if (!passwordHasher.verify(user.getPassword(), oldPassword))
+            throw new IllegalArgumentException("password is wrong");
+        changePassword(user, newPassword);
     }
 
     @Override
