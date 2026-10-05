@@ -10,4 +10,5 @@ final class UserTestConstants {
 
     static final String USERNAME2 = "qoqnus_master2";
     static final String DISPLAY_NAME2 = "Qoqnus master 2";
+    static final String PASSWORD2 = "stronger-password";
 }
