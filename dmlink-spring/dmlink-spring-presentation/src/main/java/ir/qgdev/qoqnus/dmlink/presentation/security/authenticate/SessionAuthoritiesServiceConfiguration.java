@@ -20,6 +20,7 @@ import java.util.Set;
 public class SessionAuthoritiesServiceConfiguration {
     private final Collection<? extends GrantedAuthority> devSessionAuthorities = Set.of(
             new SimpleGrantedAuthority("ROLE_LINK_CREATE"),
+            new SimpleGrantedAuthority("ROLE_USER_DELETE_SELF"),
             new SimpleGrantedAuthority("ROLE_USER_GET_SELF"),
             new SimpleGrantedAuthority("ROLE_SESSION_GET_SELF")
     );
