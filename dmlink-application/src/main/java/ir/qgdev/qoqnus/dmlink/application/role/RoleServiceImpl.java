@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -20,6 +21,7 @@ public class RoleServiceImpl implements RoleService {
                 .id(idGenerator.generate())
                 .name(name)
                 .parents(parents)
+                .actions(List.of())
                 .build();
         return roleRepository.save(role);
     }

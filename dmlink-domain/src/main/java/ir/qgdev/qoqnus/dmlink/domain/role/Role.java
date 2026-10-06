@@ -1,5 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.domain.role;
 
+import ir.qgdev.qoqnus.dmlink.domain.action.Action;
 import ir.qgdev.qoqnus.dmlink.domain.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -33,6 +34,12 @@ public class Role extends Entity {
      */
     @NonNull
     Collection<Role> parents;
+
+    /**
+     * Actions that the role is permitted to do
+     */
+    @NonNull
+    Collection<Action> actions;
 
     /**
      * Check if granted role has access to needed role permissions
