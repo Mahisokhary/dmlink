@@ -1,6 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.application.role;
 
 import ir.qgdev.qoqnus.dmlink.application.IdGenerator;
+import ir.qgdev.qoqnus.dmlink.domain.action.Action;
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
 import lombok.NonNull;
@@ -27,12 +28,13 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public boolean hasAccess(@NonNull Role needed, Role granted) {
+    public boolean hasAccess(@NonNull Action action, Role granted) {
         if (granted == null) {
             Optional<Role> defaultRole = roleRepository.getDefaultRole();
             if (defaultRole.isEmpty()) return false;
             granted = defaultRole.get();
         }
-        return needed.hasAccess(granted);
+        return granted.hasAccess(action);
     }
+
 }

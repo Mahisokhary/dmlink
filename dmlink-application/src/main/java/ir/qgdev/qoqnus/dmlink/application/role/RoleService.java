@@ -1,5 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.application.role;
 
+import ir.qgdev.qoqnus.dmlink.domain.action.Action;
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import lombok.NonNull;
 
@@ -29,9 +30,9 @@ public interface RoleService {
     Role create(String name, Collection<Role> parents);
 
     /**
-     * Check if granted role has access to needed role permissions
+     * Check if granted role can perform given action
      * If granted is null default role is used instead
      */
-    boolean hasAccess(@NonNull Role needed, Role granted);
+    boolean hasAccess(@NonNull Action action, Role granted);
 
 }
