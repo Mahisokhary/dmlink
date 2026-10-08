@@ -45,11 +45,12 @@ public class Role extends Entity {
      * Checks if the role has permission to perform given action
      */
     public boolean hasAccess(@NonNull Action action) {
-        if (actions.contains(action)) return true;
-        return getParents().stream()
-                .map(Role::getActions)
-                .flatMap(Collection::stream)
-                .anyMatch(action::equals);
+        if (actions.stream().map(Action::getName).anyMatch(action.getName()::equals))
+            return true;
+        for (Role parent : getParents())
+            if (parent.hasAccess(action))
+                return true;
+        return false;
     }
 
 }
