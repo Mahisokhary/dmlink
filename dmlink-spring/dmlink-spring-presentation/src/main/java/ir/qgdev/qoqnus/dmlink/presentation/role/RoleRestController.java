@@ -23,7 +23,7 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/role")
+@RequestMapping("/role")
 public class RoleRestController {
     private final RoleService roleService;
     private final RoleRepository roleRepository;

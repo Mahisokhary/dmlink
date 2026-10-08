@@ -60,7 +60,7 @@ public class SessionRestControllerTest {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
         SessionCreateRequestDto body = new SessionCreateRequestDto(USERNAME, PASSWORD);
-        MockHttpServletRequestBuilder requestBuilder = post("/api/session/")
+        MockHttpServletRequestBuilder requestBuilder = post("/session/")
                 .content(objectMapper.writeValueAsBytes(body))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -77,7 +77,7 @@ public class SessionRestControllerTest {
         assertEquals("Incorrect user is owner oof the session", user.getId(), res.session().user());
 
         SessionCreateRequestDto wrongBody = new SessionCreateRequestDto(USERNAME, PASSWORD + "WRONG PASSWORD");
-        MockHttpServletRequestBuilder wrongRequestBuilder = post("/api/session/")
+        MockHttpServletRequestBuilder wrongRequestBuilder = post("/session/")
                 .content(objectMapper.writeValueAsBytes(wrongBody))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -92,7 +92,7 @@ public class SessionRestControllerTest {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/session/")
+        MockHttpServletRequestBuilder requestBuilder = get("/session/")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -115,7 +115,7 @@ public class SessionRestControllerTest {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/session/{id}", session.getId())
+        MockHttpServletRequestBuilder requestBuilder = get("/session/{id}", session.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -136,13 +136,13 @@ public class SessionRestControllerTest {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
 
-        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/api/session/{id}", session.getId())
+        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/session/{id}", session.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult deleteMvcResult = mockMvc.perform(deleteRequestBuilder)
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        MockHttpServletRequestBuilder getRequestBuilder = get("/api/session/{id}", session.getId())
+        MockHttpServletRequestBuilder getRequestBuilder = get("/session/{id}", session.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult getMvcResult = mockMvc.perform(getRequestBuilder)
                 .andExpect(status().isNotFound())

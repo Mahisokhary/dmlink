@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.link;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.ApiSecurityConfigurer;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.AuthorizationManagerFactory;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
@@ -21,15 +21,15 @@ public class LinkSecurityConfiguration {
     @Order(0)
     public SecurityFilterChain linkSecurityFilterChain(HttpSecurity http) {
         return http
-                .with(new ApiEndpointSecurityConfigurer())
-                .securityMatcher("/api/link/**")
+                .with(new ApiSecurityConfigurer())
+                .securityMatcher("/link/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/link/", "name")).access(authorize.hasAction(LinkActions.GET_BY_NAME))
-                        .requestMatchers(HttpMethod.POST, "/api/link/").access(authorize.hasAction(LinkActions.CREATE))
-                        .requestMatchers(HttpMethod.GET, "/api/link/").access(authorize.hasAction(LinkActions.GET_ALL))
-                        .requestMatchers(HttpMethod.GET, "/api/link/*").access(authorize.hasAction(LinkActions.GET))
-                        .requestMatchers(HttpMethod.PUT, "/api/link/*").access(authorize.hasAction(LinkActions.MODIFY))
-                        .requestMatchers(HttpMethod.DELETE, "/api/link/*").access(authorize.hasAction(LinkActions.DELETE))
+                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/link/", "name")).access(authorize.hasAction(LinkActions.GET_BY_NAME))
+                        .requestMatchers(HttpMethod.POST, "/link/").access(authorize.hasAction(LinkActions.CREATE))
+                        .requestMatchers(HttpMethod.GET, "/link/").access(authorize.hasAction(LinkActions.GET_ALL))
+                        .requestMatchers(HttpMethod.GET, "/link/*").access(authorize.hasAction(LinkActions.GET))
+                        .requestMatchers(HttpMethod.PUT, "/link/*").access(authorize.hasAction(LinkActions.MODIFY))
+                        .requestMatchers(HttpMethod.DELETE, "/link/*").access(authorize.hasAction(LinkActions.DELETE))
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )

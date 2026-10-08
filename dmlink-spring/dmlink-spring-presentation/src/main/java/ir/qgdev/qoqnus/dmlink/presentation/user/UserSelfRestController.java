@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/user/@me")
+@RequestMapping("/user/@me")
 public class UserSelfRestController {
     private final UserRepository userRepository;
     private final UserService userService;

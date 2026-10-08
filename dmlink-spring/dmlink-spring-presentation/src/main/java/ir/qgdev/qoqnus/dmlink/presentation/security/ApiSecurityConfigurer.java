@@ -6,9 +6,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 
 /**
- * Security Configurer to be used for endpoints matching {@code /api/**}
+ * Security Configurer to be used for RESTful API endpoints
  */
-public class ApiEndpointSecurityConfigurer extends AbstractHttpConfigurer<ApiEndpointSecurityConfigurer, HttpSecurity> {
+public class ApiSecurityConfigurer extends AbstractHttpConfigurer<ApiSecurityConfigurer, HttpSecurity> {
     @Override
     public void init(HttpSecurity http) {
         http

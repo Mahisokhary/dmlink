@@ -46,7 +46,7 @@ public class UserRestControllerTest {
     @WithMockUser(authorities = "user.create")
     public void testCreate() throws Exception {
         UserCreateRequestDto body = new UserCreateRequestDto(USERNAME, DISPLAY_NAME, PASSWORD);
-        MockHttpServletRequestBuilder requestBuilder = post("/api/user/")
+        MockHttpServletRequestBuilder requestBuilder = post("/user/")
                 .content(objectMapper.writeValueAsBytes(body))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -69,7 +69,7 @@ public class UserRestControllerTest {
     public void testGetAll() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/user/")
+        MockHttpServletRequestBuilder requestBuilder = get("/user/")
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -94,7 +94,7 @@ public class UserRestControllerTest {
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/user/{id}", user.getId())
+        MockHttpServletRequestBuilder requestBuilder = get("/user/{id}", user.getId())
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -116,7 +116,7 @@ public class UserRestControllerTest {
     public void testGetByUsername() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/user/")
+        MockHttpServletRequestBuilder requestBuilder = get("/user/")
                 .param("username", USERNAME)
                 .accept(MediaType.APPLICATION_JSON);
 
@@ -140,7 +140,7 @@ public class UserRestControllerTest {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
         UserCreateRequestDto requestDto = new UserCreateRequestDto(USERNAME2, DISPLAY_NAME2, PASSWORD);
-        MockHttpServletRequestBuilder requestBuilder = put("/api/user/{id}", user.getId())
+        MockHttpServletRequestBuilder requestBuilder = put("/user/{id}", user.getId())
                 .content(objectMapper.writeValueAsBytes(requestDto))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -164,13 +164,13 @@ public class UserRestControllerTest {
     public void testDelete() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
-        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/api/user/{id}", user.getId())
+        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/user/{id}", user.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult deleteMvcResult = mockMvc.perform(deleteRequestBuilder)
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        MockHttpServletRequestBuilder getRequestBuilder = get("/api/user/{id}", user.getId())
+        MockHttpServletRequestBuilder getRequestBuilder = get("/user/{id}", user.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult getMvcResult = mockMvc.perform(getRequestBuilder)
                 .andExpect(status().isNotFound())

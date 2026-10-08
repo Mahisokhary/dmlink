@@ -68,7 +68,7 @@ public class UserSelfRestControllerTest {
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
         Collection<GrantedAuthority> authorities = Set.of(UserActions.GET_SELF);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/user/@me")
+        MockHttpServletRequestBuilder requestBuilder = get("/user/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -90,7 +90,7 @@ public class UserSelfRestControllerTest {
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
         Collection<GrantedAuthority> authorities = Set.of(UserActions.DELETE_SELF);
 
-        MockHttpServletRequestBuilder requestBuilder = delete("/api/user/@me")
+        MockHttpServletRequestBuilder requestBuilder = delete("/user/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -108,7 +108,7 @@ public class UserSelfRestControllerTest {
         Collection<GrantedAuthority> authorities = Set.of(UserActions.MODIFY_SELF_PASSWORD);
         UserChangePasswordRequestDto req = new UserChangePasswordRequestDto(PASSWORD, PASSWORD2);
 
-        MockHttpServletRequestBuilder requestBuilder = put("/api/user/@me/password")
+        MockHttpServletRequestBuilder requestBuilder = put("/user/@me/password")
                 .content(objectMapper.writeValueAsBytes(req))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))

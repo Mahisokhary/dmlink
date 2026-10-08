@@ -18,7 +18,7 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/link")
+@RequestMapping("/link")
 public class LinkRestController {
     private final LinkService linkService;
     private final LinkRepository linkRepository;
