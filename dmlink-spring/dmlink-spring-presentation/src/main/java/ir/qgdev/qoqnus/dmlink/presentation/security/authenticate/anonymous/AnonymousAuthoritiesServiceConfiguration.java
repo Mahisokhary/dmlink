@@ -1,14 +1,16 @@
 package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.anonymous;
 
 import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
+import ir.qgdev.qoqnus.dmlink.presentation.link.LinkActions;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.RoleGrantedAuthority;
+import ir.qgdev.qoqnus.dmlink.presentation.session.SessionActions;
+import ir.qgdev.qoqnus.dmlink.presentation.user.UserActions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.Set;
@@ -20,9 +22,9 @@ import java.util.Set;
 @Configuration
 public class AnonymousAuthoritiesServiceConfiguration {
     private final Collection<? extends GrantedAuthority> devAnonymousAuthorities = Set.of(
-            new SimpleGrantedAuthority("ROLE_LINK_GET_NAME"),
-            new SimpleGrantedAuthority("ROLE_USER_CREATE"),
-            new SimpleGrantedAuthority("ROLE_SESSION_CREATE")
+            LinkActions.GET_BY_NAME,
+            UserActions.CREATE,
+            SessionActions.CREATE
     );
 
     private final RoleRepository roleRepository;
