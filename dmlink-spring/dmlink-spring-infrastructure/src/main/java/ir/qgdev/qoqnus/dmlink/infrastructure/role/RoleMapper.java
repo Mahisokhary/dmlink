@@ -1,5 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.infrastructure.role;
 
+import ir.qgdev.qoqnus.dmlink.domain.action.Action;
+import ir.qgdev.qoqnus.dmlink.domain.action.SimpleAction;
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import ir.qgdev.qoqnus.dmlink.infrastructure.Mapper;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +17,7 @@ public class RoleMapper implements Mapper<Role, RoleEntity> {
                 .id(jpa.getId())
                 .name(jpa.getName())
                 .parents(jpa.getParents().stream().map(this::toDomain).toList())
+                .actions(jpa.getActions().stream().<Action>map(SimpleAction::new).toList())
                 .build();
     }
 
@@ -25,6 +28,7 @@ public class RoleMapper implements Mapper<Role, RoleEntity> {
                 .id(domain.getId())
                 .name(domain.getName())
                 .parents(domain.getParents().stream().map(this::toJpa).toList())
+                .actions(domain.getActions().stream().map(Action::getName).toList())
                 .build();
     }
 }

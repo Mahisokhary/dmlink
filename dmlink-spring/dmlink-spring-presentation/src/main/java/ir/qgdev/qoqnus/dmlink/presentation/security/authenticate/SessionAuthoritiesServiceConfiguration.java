@@ -1,13 +1,15 @@
 package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate;
 
 import ir.qgdev.qoqnus.dmlink.domain.role.RoleRepository;
+import ir.qgdev.qoqnus.dmlink.presentation.link.LinkActions;
+import ir.qgdev.qoqnus.dmlink.presentation.session.SessionActions;
+import ir.qgdev.qoqnus.dmlink.presentation.user.UserActions;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Collection;
 import java.util.Set;
@@ -19,10 +21,10 @@ import java.util.Set;
 @Configuration
 public class SessionAuthoritiesServiceConfiguration {
     private final Collection<? extends GrantedAuthority> devSessionAuthorities = Set.of(
-            new SimpleGrantedAuthority("ROLE_LINK_CREATE"),
-            new SimpleGrantedAuthority("ROLE_USER_DELETE_SELF"),
-            new SimpleGrantedAuthority("ROLE_USER_GET_SELF"),
-            new SimpleGrantedAuthority("ROLE_SESSION_GET_SELF")
+            LinkActions.CREATE,
+            UserActions.DELETE_SELF,
+            UserActions.GET_SELF,
+            SessionActions.GET_SELF
     );
 
     private final RoleRepository roleRepository;

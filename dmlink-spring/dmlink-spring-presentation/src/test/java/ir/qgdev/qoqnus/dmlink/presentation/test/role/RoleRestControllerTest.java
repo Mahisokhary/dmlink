@@ -47,7 +47,7 @@ public class RoleRestControllerTest {
     private RoleRepository roleRepository;
 
     @Test
-    @WithMockUser(authorities = "ROLE_ROLE_CREATE")
+    @WithMockUser(authorities = "role.create")
     public void testCreate() throws Exception {
         Role role = roleService.create(NAME);
         RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of(role.getId()));
@@ -71,7 +71,7 @@ public class RoleRestControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ROLE_ROLE_GET_ALL")
+    @WithMockUser(authorities = "role.get.all")
     public void testGetAll() throws Exception {
         Role parent = roleService.create(NAME);
         Role role = roleService.create(NAME2, Set.of(parent));
@@ -91,7 +91,7 @@ public class RoleRestControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ROLE_ROLE_GET")
+    @WithMockUser(authorities = "role.get")
     public void testGet() throws Exception {
         Role role = roleService.create(NAME);
 
@@ -110,7 +110,7 @@ public class RoleRestControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ROLE_ROLE_GET_NAME")
+    @WithMockUser(authorities = "role.get.name")
     public void testGetByName() throws Exception {
         Role role = roleService.create(NAME);
 
@@ -130,7 +130,7 @@ public class RoleRestControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ROLE_ROLE_MODIFY")
+    @WithMockUser(authorities = "role.modify")
     public void testModify() throws Exception {
         Role role = roleService.create(NAME);
         RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of());
@@ -153,7 +153,7 @@ public class RoleRestControllerTest {
     }
 
     @Test
-    @WithMockUser(authorities = "ROLE_ROLE_DELETE")
+    @WithMockUser(authorities = "role.delete")
     public void testDelete() throws Exception {
         Role role = roleService.create(NAME);
 

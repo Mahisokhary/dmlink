@@ -1,5 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.domain.role;
 
+import ir.qgdev.qoqnus.dmlink.domain.action.Action;
 import ir.qgdev.qoqnus.dmlink.domain.Entity;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -35,10 +36,20 @@ public class Role extends Entity {
     Collection<Role> parents;
 
     /**
-     * Check if granted role has access to needed role permissions
+     * Actions that the role is permitted to do
      */
-    public boolean hasAccess(@NonNull Role granted) {
-        if (equals(granted)) return true;
-        return granted.getParents().stream().anyMatch(this::hasAccess);
+    @NonNull
+    Collection<Action> actions;
+
+    /**
+     * Checks if the role has permission to perform given action
+     */
+    public boolean hasAccess(@NonNull Action action) {
+        if (actions.contains(action)) return true;
+        return getParents().stream()
+                .map(Role::getActions)
+                .flatMap(Collection::stream)
+                .anyMatch(action::equals);
     }
+
 }

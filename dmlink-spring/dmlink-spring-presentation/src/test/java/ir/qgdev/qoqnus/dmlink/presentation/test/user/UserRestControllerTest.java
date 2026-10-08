@@ -43,7 +43,7 @@ public class UserRestControllerTest {
     private UserService userService;
 
     @Test
-    @WithMockUser(roles = "USER_CREATE")
+    @WithMockUser(authorities = "user.create")
     public void testCreate() throws Exception {
         UserCreateRequestDto body = new UserCreateRequestDto(USERNAME, DISPLAY_NAME, PASSWORD);
         MockHttpServletRequestBuilder requestBuilder = post("/api/user/")
@@ -65,7 +65,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER_GET_ALL")
+    @WithMockUser(authorities = "user.get.all")
     public void testGetAll() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
@@ -90,7 +90,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER_GET")
+    @WithMockUser(authorities = "user.get")
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
@@ -112,7 +112,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER_GET_USERNAME")
+    @WithMockUser(authorities = "user.get.username")
     public void testGetByUsername() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
@@ -135,7 +135,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER_MODIFY")
+    @WithMockUser(authorities = "user.modify")
     public void testModify() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
@@ -160,7 +160,7 @@ public class UserRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = { "USER_DELETE", "USER_GET" })
+    @WithMockUser(authorities = { "user.delete", "user.get" })
     public void testDelete() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 

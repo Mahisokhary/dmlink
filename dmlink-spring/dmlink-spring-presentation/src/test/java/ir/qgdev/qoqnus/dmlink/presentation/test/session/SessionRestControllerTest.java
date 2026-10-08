@@ -55,7 +55,7 @@ public class SessionRestControllerTest {
     private SessionService sessionService;
 
     @Test
-    @WithMockUser(roles = "SESSION_CREATE")
+    @WithMockUser(authorities = "session.create")
     public void testCreate() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
@@ -87,7 +87,7 @@ public class SessionRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "SESSION_GET_ALL")
+    @WithMockUser(authorities = "session.get.all")
     public void testGetAll() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
@@ -110,7 +110,7 @@ public class SessionRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "SESSION_GET")
+    @WithMockUser(authorities = "session.get")
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
@@ -131,7 +131,7 @@ public class SessionRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = { "SESSION_DELETE", "SESSION_GET" })
+    @WithMockUser(authorities = { "session.delete", "session.get" })
     public void testDelete() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();

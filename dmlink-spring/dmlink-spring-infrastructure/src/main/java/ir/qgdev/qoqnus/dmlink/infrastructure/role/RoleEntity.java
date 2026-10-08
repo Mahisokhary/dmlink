@@ -26,4 +26,9 @@ public class RoleEntity {
 
     @ManyToMany(fetch = FetchType.EAGER)
     Collection<RoleEntity> parents;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "role_action")
+    Collection<String> actions;
+
 }

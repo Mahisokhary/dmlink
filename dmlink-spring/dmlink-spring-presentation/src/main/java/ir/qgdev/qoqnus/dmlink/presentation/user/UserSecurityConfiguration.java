@@ -1,8 +1,10 @@
 package ir.qgdev.qoqnus.dmlink.presentation.user;
 
 import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.AuthorizationManagerFactory;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -10,8 +12,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+@RequiredArgsConstructor
 @Configuration
 public class UserSecurityConfiguration {
+    private final AuthorizationManagerFactory authorize;
+
     @Bean
     @Order(0)
     public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) {
@@ -19,15 +24,15 @@ public class UserSecurityConfiguration {
                 .with(new ApiEndpointSecurityConfigurer())
                 .securityMatcher("/api/user/**")
                 .authorizeHttpRequests(auth->auth
-                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/user/", "username")).hasAnyRole("USER_GET_USERNAME")
-                        .requestMatchers(HttpMethod.GET, "/api/user/@me").hasAnyRole("USER_GET_SELF")
-                        .requestMatchers(HttpMethod.DELETE, "/api/user/@me").hasAnyRole("USER_DELETE_SELF")
-                        .requestMatchers(HttpMethod.PUT, "/api/user/@me/password").hasAnyRole("USER_MODIFY_SELF_PASSWORD")
-                        .requestMatchers(HttpMethod.POST, "/api/user/").hasAnyRole("USER_CREATE")
-                        .requestMatchers(HttpMethod.GET, "/api/user/").hasAnyRole("USER_GET_ALL")
-                        .requestMatchers(HttpMethod.GET, "/api/user/*").hasAnyRole("USER_GET")
-                        .requestMatchers(HttpMethod.PUT, "/api/user/*").hasAnyRole("USER_MODIFY")
-                        .requestMatchers(HttpMethod.DELETE, "/api/user/*").hasAnyRole("USER_DELETE")
+                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/user/", "username")).access(authorize.hasAction(UserActions.GET_BY_USERNAME))
+                        .requestMatchers(HttpMethod.GET, "/api/user/@me").access(authorize.hasAction(UserActions.GET_SELF))
+                        .requestMatchers(HttpMethod.DELETE, "/api/user/@me").access(authorize.hasAction(UserActions.DELETE_SELF))
+                        .requestMatchers(HttpMethod.PUT, "/api/user/@me/password").access(authorize.hasAction(UserActions.MODIFY_SELF_PASSWORD))
+                        .requestMatchers(HttpMethod.POST, "/api/user/").access(authorize.hasAction(UserActions.CREATE))
+                        .requestMatchers(HttpMethod.GET, "/api/user/").access(authorize.hasAction(UserActions.GET_ALL))
+                        .requestMatchers(HttpMethod.GET, "/api/user/*").access(authorize.hasAction(UserActions.GET))
+                        .requestMatchers(HttpMethod.PUT, "/api/user/*").access(authorize.hasAction(UserActions.MODIFY))
+                        .requestMatchers(HttpMethod.DELETE, "/api/user/*").access(authorize.hasAction(UserActions.DELETE))
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )
