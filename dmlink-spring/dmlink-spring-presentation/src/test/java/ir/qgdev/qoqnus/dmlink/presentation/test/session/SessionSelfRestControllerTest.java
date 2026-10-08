@@ -8,13 +8,13 @@ import ir.qgdev.qoqnus.dmlink.domain.user.User;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtAuthentication;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionDto;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
+import ir.qgdev.qoqnus.dmlink.presentation.session.SessionActions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -26,10 +26,12 @@ import java.util.Collection;
 import java.util.Set;
 
 import static ir.qgdev.qoqnus.dmlink.presentation.test.session.SessionTestConstants.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.util.AssertionErrors.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = PresentationTestApplication.class)
 @AutoConfigureMockMvc
@@ -55,9 +57,7 @@ public class SessionSelfRestControllerTest {
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
-        Collection<GrantedAuthority> authorities = Set.of(
-                new SimpleGrantedAuthority("ROLE_SESSION_GET_SELF")
-        );
+        Collection<GrantedAuthority> authorities = Set.of(SessionActions.GET_SELF);
 
         MockHttpServletRequestBuilder requestBuilder = get("/api/session/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
@@ -79,9 +79,7 @@ public class SessionSelfRestControllerTest {
     public void testDelete() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
-        Collection<GrantedAuthority> authorities = Set.of(
-                new SimpleGrantedAuthority("ROLE_SESSION_DELETE_SELF")
-        );
+        Collection<GrantedAuthority> authorities = Set.of(SessionActions.DELETE_SELF);
 
         MockHttpServletRequestBuilder requestBuilder = delete("/api/session/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
