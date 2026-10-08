@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.role;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.ApiSecurityConfigurer;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.AuthorizationManagerFactory;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
@@ -21,7 +21,7 @@ public class RoleSecurityConfiguration {
     @Order(0)
     public SecurityFilterChain roleSecurityFilterChain(HttpSecurity http) {
         return http
-                .with(new ApiEndpointSecurityConfigurer())
+                .with(new ApiSecurityConfigurer())
                 .securityMatcher("/role/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/role/", "name")).access(authorize.hasAction(RoleActions.GET_BY_NAME))

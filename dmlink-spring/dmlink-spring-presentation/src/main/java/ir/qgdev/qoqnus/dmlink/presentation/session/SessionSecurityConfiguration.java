@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.session;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.ApiSecurityConfigurer;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.AuthorizationManagerFactory;
 import jakarta.servlet.DispatcherType;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ public class SessionSecurityConfiguration {
     @Order(0)
     public SecurityFilterChain sessionSecurityFilterChain(HttpSecurity http) {
         return http
-                .with(new ApiEndpointSecurityConfigurer())
+                .with(new ApiSecurityConfigurer())
                 .securityMatcher("/session/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.GET, "/session/@me").access(authorize.hasAction(SessionActions.GET_SELF))

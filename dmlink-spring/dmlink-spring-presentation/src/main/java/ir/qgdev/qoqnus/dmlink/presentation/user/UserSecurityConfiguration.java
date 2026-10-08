@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.user;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.ApiSecurityConfigurer;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.AuthorizationManagerFactory;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
@@ -21,7 +21,7 @@ public class UserSecurityConfiguration {
     @Order(0)
     public SecurityFilterChain userSecurityFilterChain(HttpSecurity http) {
         return http
-                .with(new ApiEndpointSecurityConfigurer())
+                .with(new ApiSecurityConfigurer())
                 .securityMatcher("/user/**")
                 .authorizeHttpRequests(auth->auth
                         .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/user/", "username")).access(authorize.hasAction(UserActions.GET_BY_USERNAME))

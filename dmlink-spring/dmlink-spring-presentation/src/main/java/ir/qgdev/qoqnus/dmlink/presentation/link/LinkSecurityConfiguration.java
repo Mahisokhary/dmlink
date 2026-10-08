@@ -1,6 +1,6 @@
 package ir.qgdev.qoqnus.dmlink.presentation.link;
 
-import ir.qgdev.qoqnus.dmlink.presentation.security.ApiEndpointSecurityConfigurer;
+import ir.qgdev.qoqnus.dmlink.presentation.security.ApiSecurityConfigurer;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.AuthorizationManagerFactory;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authorize.QueryParamRequestMatcher;
 import jakarta.servlet.DispatcherType;
@@ -21,7 +21,7 @@ public class LinkSecurityConfiguration {
     @Order(0)
     public SecurityFilterChain linkSecurityFilterChain(HttpSecurity http) {
         return http
-                .with(new ApiEndpointSecurityConfigurer())
+                .with(new ApiSecurityConfigurer())
                 .securityMatcher("/link/**")
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/link/", "name")).access(authorize.hasAction(LinkActions.GET_BY_NAME))
