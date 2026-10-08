@@ -46,7 +46,7 @@ public class LinkRestControllerTest {
     private LinkRepository linkRepository;
 
     @Test
-    @WithMockUser(roles = "LINK_CREATE")
+    @WithMockUser(authorities = "link.create")
     public void testCreate() throws Exception {
         LinkCreateRequestDto req = new LinkCreateRequestDto(NAME, TARGET);
 
@@ -69,7 +69,7 @@ public class LinkRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "LINK_GET_ALL")
+    @WithMockUser(authorities = "link.get.all")
     public void testGetAll() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
@@ -94,7 +94,7 @@ public class LinkRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "LINK_GET")
+    @WithMockUser(authorities = "link.get")
     public void testGet() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
@@ -116,7 +116,7 @@ public class LinkRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "LINK_GET_NAME")
+    @WithMockUser(authorities = "link.get.name")
     public void testGetByName() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
@@ -139,7 +139,7 @@ public class LinkRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "LINK_MODIFY")
+    @WithMockUser(authorities = "link.modify")
     public void testModify() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
         LinkCreateRequestDto req = new LinkCreateRequestDto(NAME2, TARGET2);
@@ -164,7 +164,7 @@ public class LinkRestControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "LINK_DELETE")
+    @WithMockUser(authorities = "link.delete")
     public void testDelete() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
