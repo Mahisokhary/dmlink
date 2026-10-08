@@ -9,6 +9,7 @@ import ir.qgdev.qoqnus.dmlink.domain.user.UserRepository;
 import ir.qgdev.qoqnus.dmlink.infrastructure.session.SessionJpaRepository;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtAuthentication;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
+import ir.qgdev.qoqnus.dmlink.presentation.user.UserActions;
 import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserChangePasswordRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserDto;
 import org.junit.jupiter.api.Test;
@@ -17,7 +18,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -30,10 +30,11 @@ import java.util.Optional;
 import java.util.Set;
 
 import static ir.qgdev.qoqnus.dmlink.presentation.test.user.UserTestConstants.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.authentication;
 import static org.springframework.test.util.AssertionErrors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest(classes = PresentationTestApplication.class)
 @AutoConfigureMockMvc
@@ -65,9 +66,7 @@ public class UserSelfRestControllerTest {
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
-        Collection<GrantedAuthority> authorities = Set.of(
-                new SimpleGrantedAuthority("ROLE_USER_GET_SELF")
-        );
+        Collection<GrantedAuthority> authorities = Set.of(UserActions.GET_SELF);
 
         MockHttpServletRequestBuilder requestBuilder = get("/api/user/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
@@ -89,9 +88,7 @@ public class UserSelfRestControllerTest {
     public void testDelete() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
-        Collection<GrantedAuthority> authorities = Set.of(
-                new SimpleGrantedAuthority("ROLE_USER_DELETE_SELF")
-        );
+        Collection<GrantedAuthority> authorities = Set.of(UserActions.DELETE_SELF);
 
         MockHttpServletRequestBuilder requestBuilder = delete("/api/user/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
@@ -108,9 +105,7 @@ public class UserSelfRestControllerTest {
     public void testModifyPassword() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
-        Collection<GrantedAuthority> authorities = Set.of(
-                new SimpleGrantedAuthority("ROLE_USER_MODIFY_SELF_PASSWORD")
-        );
+        Collection<GrantedAuthority> authorities = Set.of(UserActions.MODIFY_SELF_PASSWORD);
         UserChangePasswordRequestDto req = new UserChangePasswordRequestDto(PASSWORD, PASSWORD2);
 
         MockHttpServletRequestBuilder requestBuilder = put("/api/user/@me/password")
