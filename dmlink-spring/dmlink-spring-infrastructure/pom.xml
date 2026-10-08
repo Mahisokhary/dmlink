@@ -29,12 +29,6 @@
             <artifactId>spring-boot-data-jpa-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- Embedded Database for testing -->
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>test</scope>
-        </dependency>
 
         <!-- For cryptography -->
         <dependency>

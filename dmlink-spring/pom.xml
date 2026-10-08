@@ -31,6 +31,16 @@
         <module>dmlink-spring-bootstrap</module>
     </modules>
 
+    <dependencies>
+        <!-- Embedded Database for testing -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
