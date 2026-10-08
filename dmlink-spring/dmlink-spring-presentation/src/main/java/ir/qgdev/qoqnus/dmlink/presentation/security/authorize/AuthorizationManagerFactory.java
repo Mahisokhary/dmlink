@@ -10,4 +10,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 @Component
 public class AuthorizationManagerFactory {
+    private final RoleService roleService;
+
+    public AuthorizationManager<RequestAuthorizationContext> hasAction(Action action) {
+        return new ActionAuthorizationManager(roleService, action);
+    }
+
 }
