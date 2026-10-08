@@ -22,14 +22,14 @@ public class RoleSecurityConfiguration {
     public SecurityFilterChain roleSecurityFilterChain(HttpSecurity http) {
         return http
                 .with(new ApiEndpointSecurityConfigurer())
-                .securityMatcher("/api/role/**")
+                .securityMatcher("/role/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/api/role/", "name")).access(authorize.hasAction(RoleActions.GET_BY_NAME))
-                        .requestMatchers(HttpMethod.POST, "/api/role/").access(authorize.hasAction(RoleActions.CREATE))
-                        .requestMatchers(HttpMethod.GET, "/api/role/").access(authorize.hasAction(RoleActions.GET_ALL))
-                        .requestMatchers(HttpMethod.GET, "/api/role/*").access(authorize.hasAction(RoleActions.GET))
-                        .requestMatchers(HttpMethod.PUT, "/api/role/*").access(authorize.hasAction(RoleActions.MODIFY))
-                        .requestMatchers(HttpMethod.DELETE, "/api/role/*").access(authorize.hasAction(RoleActions.DELETE))
+                        .requestMatchers(new QueryParamRequestMatcher(HttpMethod.GET, "/role/", "name")).access(authorize.hasAction(RoleActions.GET_BY_NAME))
+                        .requestMatchers(HttpMethod.POST, "/role/").access(authorize.hasAction(RoleActions.CREATE))
+                        .requestMatchers(HttpMethod.GET, "/role/").access(authorize.hasAction(RoleActions.GET_ALL))
+                        .requestMatchers(HttpMethod.GET, "/role/*").access(authorize.hasAction(RoleActions.GET))
+                        .requestMatchers(HttpMethod.PUT, "/role/*").access(authorize.hasAction(RoleActions.MODIFY))
+                        .requestMatchers(HttpMethod.DELETE, "/role/*").access(authorize.hasAction(RoleActions.DELETE))
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )

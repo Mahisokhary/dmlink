@@ -52,7 +52,7 @@ public class RoleRestControllerTest {
         Role role = roleService.create(NAME);
         RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of(role.getId()));
 
-        MockHttpServletRequestBuilder requestBuilder = post("/api/role/")
+        MockHttpServletRequestBuilder requestBuilder = post("/role/")
                 .content(objectMapper.writeValueAsBytes(req))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -76,7 +76,7 @@ public class RoleRestControllerTest {
         Role parent = roleService.create(NAME);
         Role role = roleService.create(NAME2, Set.of(parent));
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/role/")
+        MockHttpServletRequestBuilder requestBuilder = get("/role/")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -95,7 +95,7 @@ public class RoleRestControllerTest {
     public void testGet() throws Exception {
         Role role = roleService.create(NAME);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/role/{id}", role.getId())
+        MockHttpServletRequestBuilder requestBuilder = get("/role/{id}", role.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -114,7 +114,7 @@ public class RoleRestControllerTest {
     public void testGetByName() throws Exception {
         Role role = roleService.create(NAME);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/role/")
+        MockHttpServletRequestBuilder requestBuilder = get("/role/")
                 .queryParam("name", NAME)
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -135,7 +135,7 @@ public class RoleRestControllerTest {
         Role role = roleService.create(NAME);
         RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of());
 
-        MockHttpServletRequestBuilder requestBuilder = put("/api/role/{id}", role.getId())
+        MockHttpServletRequestBuilder requestBuilder = put("/role/{id}", role.getId())
                 .content(objectMapper.writeValueAsBytes(req))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -157,7 +157,7 @@ public class RoleRestControllerTest {
     public void testDelete() throws Exception {
         Role role = roleService.create(NAME);
 
-        MockHttpServletRequestBuilder requestBuilder = delete("/api/role/{id}", role.getId())
+        MockHttpServletRequestBuilder requestBuilder = delete("/role/{id}", role.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isNoContent())

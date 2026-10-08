@@ -50,7 +50,7 @@ public class LinkRestControllerTest {
     public void testCreate() throws Exception {
         LinkCreateRequestDto req = new LinkCreateRequestDto(NAME, TARGET);
 
-        MockHttpServletRequestBuilder requestBuilder = post("/api/link/")
+        MockHttpServletRequestBuilder requestBuilder = post("/link/")
                 .content(objectMapper.writeValueAsBytes(req))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -73,7 +73,7 @@ public class LinkRestControllerTest {
     public void testGetAll() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/link/")
+        MockHttpServletRequestBuilder requestBuilder = get("/link/")
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -98,7 +98,7 @@ public class LinkRestControllerTest {
     public void testGet() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/link/{id}", link.getId())
+        MockHttpServletRequestBuilder requestBuilder = get("/link/{id}", link.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -120,7 +120,7 @@ public class LinkRestControllerTest {
     public void testGetByName() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/link/")
+        MockHttpServletRequestBuilder requestBuilder = get("/link/")
                 .queryParam("name", NAME)
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -144,7 +144,7 @@ public class LinkRestControllerTest {
         Link link = linkService.create(NAME, TARGET, null);
         LinkCreateRequestDto req = new LinkCreateRequestDto(NAME2, TARGET2);
 
-        MockHttpServletRequestBuilder requestBuilder = put("/api/link/{id}", link.getId())
+        MockHttpServletRequestBuilder requestBuilder = put("/link/{id}", link.getId())
                 .content(objectMapper.writeValueAsBytes(req))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -168,7 +168,7 @@ public class LinkRestControllerTest {
     public void testDelete() throws Exception {
         Link link = linkService.create(NAME, TARGET, null);
 
-        MockHttpServletRequestBuilder requestBuilder = delete("/api/link/{id}", link.getId())
+        MockHttpServletRequestBuilder requestBuilder = delete("/link/{id}", link.getId())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isNoContent())

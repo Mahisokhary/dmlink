@@ -59,7 +59,7 @@ public class SessionSelfRestControllerTest {
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
         Collection<GrantedAuthority> authorities = Set.of(SessionActions.GET_SELF);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/api/session/@me")
+        MockHttpServletRequestBuilder requestBuilder = get("/session/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -81,7 +81,7 @@ public class SessionSelfRestControllerTest {
         Session session = sessionService.login(USERNAME, PASSWORD).orElseThrow();
         Collection<GrantedAuthority> authorities = Set.of(SessionActions.DELETE_SELF);
 
-        MockHttpServletRequestBuilder requestBuilder = delete("/api/session/@me")
+        MockHttpServletRequestBuilder requestBuilder = delete("/session/@me")
                 .with(authentication(JwtAuthentication.fromSession(session, authorities)))
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)

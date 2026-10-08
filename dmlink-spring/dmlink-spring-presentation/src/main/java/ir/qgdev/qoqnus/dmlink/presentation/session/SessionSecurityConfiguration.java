@@ -21,14 +21,14 @@ public class SessionSecurityConfiguration {
     public SecurityFilterChain sessionSecurityFilterChain(HttpSecurity http) {
         return http
                 .with(new ApiEndpointSecurityConfigurer())
-                .securityMatcher("/api/session/**")
+                .securityMatcher("/session/**")
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.GET, "/api/session/@me").access(authorize.hasAction(SessionActions.GET_SELF))
-                        .requestMatchers(HttpMethod.DELETE, "/api/session/@me").access(authorize.hasAction(SessionActions.DELETE_SELF))
-                        .requestMatchers(HttpMethod.POST, "/api/session/").access(authorize.hasAction(SessionActions.CREATE))
-                        .requestMatchers(HttpMethod.GET, "/api/session/").access(authorize.hasAction(SessionActions.GET_ALL))
-                        .requestMatchers(HttpMethod.GET, "/api/session/*").access(authorize.hasAction(SessionActions.GET))
-                        .requestMatchers(HttpMethod.DELETE, "/api/session/*").access(authorize.hasAction(SessionActions.DELETE))
+                        .requestMatchers(HttpMethod.GET, "/session/@me").access(authorize.hasAction(SessionActions.GET_SELF))
+                        .requestMatchers(HttpMethod.DELETE, "/session/@me").access(authorize.hasAction(SessionActions.DELETE_SELF))
+                        .requestMatchers(HttpMethod.POST, "/session/").access(authorize.hasAction(SessionActions.CREATE))
+                        .requestMatchers(HttpMethod.GET, "/session/").access(authorize.hasAction(SessionActions.GET_ALL))
+                        .requestMatchers(HttpMethod.GET, "/session/*").access(authorize.hasAction(SessionActions.GET))
+                        .requestMatchers(HttpMethod.DELETE, "/session/*").access(authorize.hasAction(SessionActions.DELETE))
                         .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
                         .anyRequest().denyAll()
                 )

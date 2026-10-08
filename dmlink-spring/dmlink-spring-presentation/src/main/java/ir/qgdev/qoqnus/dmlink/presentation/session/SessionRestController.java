@@ -17,7 +17,7 @@ import java.util.Collection;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/session")
+@RequestMapping("/session")
 public class SessionRestController {
     private final SessionRepository sessionRepository;
     private final SessionService sessionService;
