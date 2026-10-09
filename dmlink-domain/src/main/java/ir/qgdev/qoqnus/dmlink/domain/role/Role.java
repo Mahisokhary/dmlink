@@ -6,6 +6,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Roles of a user determines what the use is permitted to do
@@ -51,6 +53,18 @@ public class Role extends Entity<Role> {
             if (parent.hasAccess(action))
                 return true;
         return false;
+    }
+
+    public Collection<Action> fetchPermittedActions() {
+        return fetchPermittedActionsStream()
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    public Stream<Action> fetchPermittedActionsStream() {
+        Stream<Action> parentsActionsStream = getParents().stream()
+                .flatMap(Role::fetchPermittedActionsStream);
+        Stream<Action> actionsStream = getActions().stream();
+        return Stream.concat(parentsActionsStream, actionsStream);
     }
 
 }
