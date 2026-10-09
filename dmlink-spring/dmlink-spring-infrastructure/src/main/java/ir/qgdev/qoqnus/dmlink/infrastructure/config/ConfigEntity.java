@@ -25,14 +25,14 @@ public class ConfigEntity {
     /**
      * Default role of the service
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "default_role_id")
     private RoleEntity defaultRole;
 
     /**
      * Default role of the system for anonymous users
      */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "anonymous_role_id")
     private RoleEntity anonymousRole;
 
