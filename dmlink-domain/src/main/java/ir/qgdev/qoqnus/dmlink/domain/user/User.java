@@ -13,7 +13,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class User extends Entity {
+public class User extends Entity<User> {
     /**
      * Unique not-modifiable ID of the user
      */

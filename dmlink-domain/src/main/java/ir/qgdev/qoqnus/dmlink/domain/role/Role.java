@@ -15,7 +15,7 @@ import java.util.Collection;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role extends Entity {
+public class Role extends Entity<Role> {
     /**
      * Unique id of the role
      */

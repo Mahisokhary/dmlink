@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Link extends Entity {
+public class Link extends Entity<Link> {
     /**
      * Unique not-modifiable ID of the user
      */

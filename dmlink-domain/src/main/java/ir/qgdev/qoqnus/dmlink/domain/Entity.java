@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * A domain entity
  */
-public abstract class Entity {
+public abstract class Entity<T extends Entity<T>> implements Cloneable {
     /**
      * Unique id of the entity
      */
@@ -16,7 +16,7 @@ public abstract class Entity {
      */
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Entity e && o.getClass() == getClass()) {
+        if (o instanceof Entity<?> e && o.getClass() == getClass()) {
             return Objects.equals(getId(), e.getId());
         }
         return false;
@@ -29,4 +29,15 @@ public abstract class Entity {
     public int hashCode() {
         return Objects.hashCode(getId());
     }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public T clone() {
+        try {
+            return (T) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError(e);
+        }
+    }
+
 }

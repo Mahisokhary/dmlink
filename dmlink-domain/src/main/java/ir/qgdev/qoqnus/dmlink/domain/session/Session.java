@@ -14,7 +14,7 @@ import lombok.experimental.FieldDefaults;
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Session extends Entity {
+public class Session extends Entity<Session> {
     /**
      * Unique not-modifiable ID of the session
      */
