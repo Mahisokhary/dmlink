@@ -1,6 +1,10 @@
 package ir.qgdev.qoqnus.dmlink.domain.test.role;
 
+import ir.qgdev.qoqnus.dmlink.domain.action.Action;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collection;
+import java.util.Set;
 
 import static ir.qgdev.qoqnus.dmlink.domain.test.action.ActionConstants.*;
 import static ir.qgdev.qoqnus.dmlink.domain.test.role.RoleConstants.*;
@@ -19,6 +23,13 @@ public class RoleTest {
         assertTrue(ROLE_ADMIN.hasAccess(ACTION_NOT_IMPORTANT), "User role don't have access to non important action");
         assertTrue(ROLE_ADMIN.hasAccess(ACTION_IMPORTANT), "User role don't have access to important action");
         assertTrue(ROLE_ADMIN.hasAccess(ACTION_VERY_IMPORTANT), "User role don't have access to very important action");
+    }
+
+    @Test
+    public void testFetchPermittedActions() {
+        Collection<Action> expectedActions = Set.of(ACTION_NOT_IMPORTANT, ACTION_IMPORTANT, ACTION_VERY_IMPORTANT);
+        Collection<Action> fetchedActions = ROLE_ADMIN.fetchPermittedActions();
+        assertEquals(expectedActions, fetchedActions);
     }
 
 }
