@@ -90,4 +90,13 @@ public class Role extends Entity<Role> {
         return Stream.concat(parentsRolesStream, rolesStream);
     }
 
+    public void setParents(@NonNull Collection<Role> parents) {
+        boolean invalid = parents.stream()
+                .flatMap(Role::fetchPermittedRolesStream)
+                .map(Role::getId)
+                .anyMatch(getId()::equals);
+        if (invalid) throw new RoleParentCycleDetectedException();
+        this.parents = parents;
+    }
+
 }
