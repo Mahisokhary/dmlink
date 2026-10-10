@@ -1,6 +1,7 @@
 package ir.qgdev.qoqnus.dmlink.domain.test.role;
 
 import ir.qgdev.qoqnus.dmlink.domain.action.Action;
+import ir.qgdev.qoqnus.dmlink.domain.role.Role;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -30,6 +31,13 @@ public class RoleTest {
         Collection<Action> expectedActions = Set.of(ACTION_NOT_IMPORTANT, ACTION_IMPORTANT, ACTION_VERY_IMPORTANT);
         Collection<Action> fetchedActions = ROLE_ADMIN.fetchPermittedActions();
         assertEquals(expectedActions, fetchedActions);
+    }
+
+    @Test
+    public void testFetchPermittedRoles() {
+        Collection<Role> expectedRoles = Set.of(ROLE_ANONYMOUS, ROLE_USER);
+        Collection<Role> fetchedRoles = ROLE_ADMIN.fetchPermittedRoles();
+        assertEquals(expectedRoles, fetchedRoles);
     }
 
 }
