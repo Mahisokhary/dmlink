@@ -30,7 +30,7 @@ public class JwtServiceImpl implements JwtService {
             @NonNull @Value("${spring.application.name:dmlink}") String issuer
     ) {
         if (Objects.equals(secret, DEFAULT_SECRET)) {
-            log.warn("Default secret is used, ignore if you are debugging, set dmlink.token.secret property for production use");
+            log.warn("Default secret is used, ignore if you are debugging, set dmlink.jwt.secret property for production use");
         }
 
         key = Keys.hmacShaKeyFor(Decoders.BASE64.decode(secret));
