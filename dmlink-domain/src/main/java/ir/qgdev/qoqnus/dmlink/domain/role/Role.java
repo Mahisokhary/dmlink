@@ -13,11 +13,22 @@ import java.util.stream.Stream;
  * Roles of a user determines what the use is permitted to do
  */
 @EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role extends Entity<Role> {
+    public Role(
+            @NonNull Long id,
+            @NonNull String name,
+            @NonNull Collection<Role> parents,
+            @NonNull Collection<Action> actions
+    ) {
+        setId(id);
+        setName(name);
+        setParents(parents);
+        setActions(actions);
+    }
+
     /**
      * Unique id of the role
      */
@@ -65,6 +76,27 @@ public class Role extends Entity<Role> {
                 .flatMap(Role::fetchPermittedActionsStream);
         Stream<Action> actionsStream = getActions().stream();
         return Stream.concat(parentsActionsStream, actionsStream);
+    }
+
+    public Collection<Role> fetchPermittedRoles() {
+        return fetchPermittedRolesStream()
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    public Stream<Role> fetchPermittedRolesStream() {
+        Stream<Role> parentsRolesStream = getParents().stream()
+                .flatMap(Role::fetchPermittedRolesStream);
+        Stream<Role> rolesStream = getParents().stream();
+        return Stream.concat(parentsRolesStream, rolesStream);
+    }
+
+    public void setParents(@NonNull Collection<Role> parents) {
+        boolean invalid = parents.stream()
+                .flatMap(Role::fetchPermittedRolesStream)
+                .map(Role::getId)
+                .anyMatch(getId()::equals);
+        if (invalid) throw new RoleParentCycleDetectedException();
+        this.parents = parents;
     }
 
 }
