@@ -1,0 +1,5 @@
+spring:
+  config:
+    import:
+      - optional:file:${catalina.base}/conf/dmlink.properties
+      - optional:file:${catalina.base}/conf/dmlink.yaml
