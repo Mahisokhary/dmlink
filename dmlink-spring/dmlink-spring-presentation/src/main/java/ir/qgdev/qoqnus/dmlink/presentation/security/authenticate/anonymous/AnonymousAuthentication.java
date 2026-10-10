@@ -3,12 +3,14 @@ package ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.anonymous;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.Transient;
 
 import java.util.Collection;
 
 /**
  * Authentication information for anonymous users
  */
+@Transient
 public record AnonymousAuthentication(Collection<? extends GrantedAuthority> getAuthorities) implements Authentication {
     @Override
     public @Nullable Object getCredentials() {

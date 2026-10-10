@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.jspecify.annotations.Nullable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.Transient;
 
 import java.util.Collection;
 
@@ -16,6 +17,7 @@ import java.util.Collection;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Getter
+@Transient
 public final class JwtAuthentication implements Authentication {
     private boolean authenticated;
     private final Session principal;
