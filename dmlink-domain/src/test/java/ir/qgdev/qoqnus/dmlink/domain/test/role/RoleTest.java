@@ -2,6 +2,7 @@ package ir.qgdev.qoqnus.dmlink.domain.test.role;
 
 import ir.qgdev.qoqnus.dmlink.domain.action.Action;
 import ir.qgdev.qoqnus.dmlink.domain.role.Role;
+import ir.qgdev.qoqnus.dmlink.domain.role.RoleParentCycleDetectedException;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
@@ -38,6 +39,14 @@ public class RoleTest {
         Collection<Role> expectedRoles = Set.of(ROLE_ANONYMOUS, ROLE_USER);
         Collection<Role> fetchedRoles = ROLE_ADMIN.fetchPermittedRoles();
         assertEquals(expectedRoles, fetchedRoles);
+    }
+
+    @Test
+    public void testParentCycleDetection() {
+        Role admin = ROLE_ADMIN.clone();
+        Role anonymous = ROLE_ANONYMOUS.clone();
+        assertDoesNotThrow(() -> admin.setParents(Set.of(anonymous)));
+        assertThrows(RoleParentCycleDetectedException.class, () -> anonymous.setParents(Set.of(ROLE_ADMIN)));
     }
 
 }
