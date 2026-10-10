@@ -20,6 +20,7 @@
           <option name="profilesMap">
             <map>
               <entry key="development" value="false" />
+              <entry key="database-h2" value="false" />
             </map>
           </option>
           <option name="projectsCmdOptionValues">
