@@ -1,3 +1,5 @@
 spring:
   application:
     name: dmlink
+  profiles:
+    default: tomcat
