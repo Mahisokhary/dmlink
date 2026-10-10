@@ -78,4 +78,16 @@ public class Role extends Entity<Role> {
         return Stream.concat(parentsActionsStream, actionsStream);
     }
 
+    public Collection<Role> fetchPermittedRoles() {
+        return fetchPermittedRolesStream()
+                .collect(Collectors.toUnmodifiableSet());
+    }
+
+    public Stream<Role> fetchPermittedRolesStream() {
+        Stream<Role> parentsRolesStream = getParents().stream()
+                .flatMap(Role::fetchPermittedRolesStream);
+        Stream<Role> rolesStream = getParents().stream();
+        return Stream.concat(parentsRolesStream, rolesStream);
+    }
+
 }
