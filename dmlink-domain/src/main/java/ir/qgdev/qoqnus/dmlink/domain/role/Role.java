@@ -13,11 +13,22 @@ import java.util.stream.Stream;
  * Roles of a user determines what the use is permitted to do
  */
 @EqualsAndHashCode(callSuper = true)
-@AllArgsConstructor
 @Data
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role extends Entity<Role> {
+    public Role(
+            @NonNull Long id,
+            @NonNull String name,
+            @NonNull Collection<Role> parents,
+            @NonNull Collection<Action> actions
+    ) {
+        setId(id);
+        setName(name);
+        setParents(parents);
+        setActions(actions);
+    }
+
     /**
      * Unique id of the role
      */
