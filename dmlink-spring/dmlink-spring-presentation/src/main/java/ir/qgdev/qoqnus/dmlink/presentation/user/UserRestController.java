@@ -7,7 +7,6 @@ import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserCreateRequestDto;
 import ir.qgdev.qoqnus.dmlink.presentation.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -21,12 +20,13 @@ public class UserRestController {
     private final UserService userService;
 
     @PostMapping("/")
-    public ResponseEntity<UserDto> create(@RequestBody UserCreateRequestDto req) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserDto create(@RequestBody UserCreateRequestDto req) {
         if (userRepository.existsByUsername(req.username())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Username already exists");
         }
         User user = userService.create(req.username(), req.displayName(), req.password());
-        return new ResponseEntity<>(new UserDto(user), HttpStatus.CREATED);
+        return new UserDto(user);
     }
 
     @GetMapping("/")
@@ -61,9 +61,9 @@ public class UserRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Long id) {
         userRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }

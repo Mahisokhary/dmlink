@@ -9,7 +9,6 @@ import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionCreateResponseDto;
 import ir.qgdev.qoqnus.dmlink.presentation.session.dto.SessionDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -24,12 +23,12 @@ public class SessionRestController {
     private final JwtService jwtService;
 
     @PostMapping("/")
-    public ResponseEntity<SessionCreateResponseDto> create(@RequestBody SessionCreateRequestDto req) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public SessionCreateResponseDto create(@RequestBody SessionCreateRequestDto req) {
         Session session = sessionService.login(req.username(), req.password())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Incorrect username or password"));
         String token = jwtService.create(session.getId().toString());
-        SessionCreateResponseDto res = new SessionCreateResponseDto(token, session);
-        return new ResponseEntity<>(res, HttpStatus.CREATED);
+        return new SessionCreateResponseDto(token, session);
     }
 
     @GetMapping("/")
@@ -47,9 +46,9 @@ public class SessionRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void delete(@PathVariable("id") Long id) {
         sessionRepository.deleteById(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
 }
