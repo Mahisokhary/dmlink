@@ -6,7 +6,6 @@ import ir.qgdev.qoqnus.dmlink.domain.session.Session;
 import ir.qgdev.qoqnus.dmlink.domain.session.SessionRepository;
 import ir.qgdev.qoqnus.dmlink.domain.user.User;
 import ir.qgdev.qoqnus.dmlink.domain.user.UserRepository;
-import ir.qgdev.qoqnus.dmlink.infrastructure.session.SessionJpaRepository;
 import ir.qgdev.qoqnus.dmlink.presentation.security.authenticate.jwt.JwtAuthentication;
 import ir.qgdev.qoqnus.dmlink.presentation.test.PresentationTestApplication;
 import ir.qgdev.qoqnus.dmlink.presentation.user.UserActions;
@@ -60,7 +59,7 @@ public class UserSelfRestControllerTest {
     public SessionRepository sessionRepository;
 
     @Autowired
-    private SessionJpaRepository sessionJpaRepository;
+    private SessionRepository sessionJpaRepository;
 
     @Test
     public void testGet() throws Exception {
