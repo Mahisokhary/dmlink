@@ -1,6 +1,6 @@
 services:
   server:
-    image: dmlink
+    image: dmlink:latest
     build: .
     container_name: dmlink-server
     ports:
