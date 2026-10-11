@@ -11,6 +11,9 @@ target/
 !.idea/
 !.idea/runConfigurations
 
+# Docker
+!/.dockerignore
+
 # Included
 !./.gitignore
 !.github/

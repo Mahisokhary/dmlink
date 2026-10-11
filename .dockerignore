@@ -1,0 +1,9 @@
+# Generic
+.*
+
+# Maven
+target/
+!**/src/*/java/**/target/
+
+# Intellij IDEA
+*.iml
