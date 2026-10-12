@@ -6,16 +6,17 @@ import lombok.NonNull;
 import java.util.Collection;
 
 public record RoleDto(
-        @NonNull Long id,
+        @NonNull String id,
         @NonNull String name,
-        @NonNull Collection<Long> parents
+        @NonNull Collection<String> parents
 ) {
     public RoleDto(Role role) {
         this(
-                role.getId(),
+                role.getId().toString(),
                 role.getName(),
                 role.getParents().stream()
                         .map(Role::getId)
+                        .map(Object::toString)
                         .toList()
         );
     }

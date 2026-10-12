@@ -23,6 +23,7 @@ public class RoleRestController {
     @ResponseStatus(HttpStatus.CREATED)
     public RoleDto create(@RequestBody RoleCreateRequestDto req) {
         Collection<Role> parents = req.parents().stream()
+                .map(Long::parseLong)
                 .map(roleRepository::findById)
                 .map(o -> o
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parents"))
@@ -55,6 +56,13 @@ public class RoleRestController {
     @PutMapping("/{id}")
     public RoleDto modify(@PathVariable("id") Long id, @RequestBody RoleCreateRequestDto req) {
         Collection<Role> parents = req.parents().stream()
+                .map(i -> {
+                    try {
+                        return Long.valueOf(i);
+                    } catch (NumberFormatException e) {
+                        throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parents", e);
+                    }
+                })
                 .map(roleRepository::findById)
                 .map(o -> o
                         .orElseThrow(() -> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid parents"))

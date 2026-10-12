@@ -86,7 +86,7 @@ public class UserRestControllerTest {
         UserDto userDto = userDtoList[0];
         assertEquals("Username differs from saved username", USERNAME, userDto.username());
         assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
-        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
+        assertEquals("ID differs from saved ID", user.getId().toString(), userDto.id());
     }
 
     @Test
@@ -94,7 +94,7 @@ public class UserRestControllerTest {
     public void testGet() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/user/{id}", user.getId())
+        MockHttpServletRequestBuilder requestBuilder = get("/user/{id}", user.getId().toString())
                 .accept(MediaType.APPLICATION_JSON);
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
@@ -108,7 +108,7 @@ public class UserRestControllerTest {
         UserDto userDto = objectMapper.readValue(content, UserDto.class);
         assertEquals("Username differs from saved username", USERNAME, userDto.username());
         assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
-        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
+        assertEquals("ID differs from saved ID", user.getId().toString(), userDto.id());
     }
 
     @Test
@@ -131,7 +131,7 @@ public class UserRestControllerTest {
         UserDto userDto = objectMapper.readValue(content, UserDto.class);
         assertEquals("Username differs from saved username", USERNAME, userDto.username());
         assertEquals("Display name differs from saved username", DISPLAY_NAME, userDto.displayName());
-        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
+        assertEquals("ID differs from saved ID", user.getId().toString(), userDto.id());
     }
 
     @Test
@@ -140,7 +140,7 @@ public class UserRestControllerTest {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
         UserCreateRequestDto requestDto = new UserCreateRequestDto(USERNAME2, DISPLAY_NAME2, PASSWORD);
-        MockHttpServletRequestBuilder requestBuilder = put("/user/{id}", user.getId())
+        MockHttpServletRequestBuilder requestBuilder = put("/user/{id}", user.getId().toString())
                 .content(objectMapper.writeValueAsBytes(requestDto))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -156,7 +156,7 @@ public class UserRestControllerTest {
         UserDto userDto = objectMapper.readValue(content, UserDto.class);
         assertEquals("Username differs from modified username", USERNAME2, userDto.username());
         assertEquals("Display name differs from modified username", DISPLAY_NAME2, userDto.displayName());
-        assertEquals("ID differs from saved ID", user.getId(), userDto.id());
+        assertEquals("ID differs from saved ID", user.getId().toString(), userDto.id());
     }
 
     @Test
@@ -164,13 +164,13 @@ public class UserRestControllerTest {
     public void testDelete() throws Exception {
         User user = userService.create(USERNAME, DISPLAY_NAME, PASSWORD);
 
-        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/user/{id}", user.getId())
+        MockHttpServletRequestBuilder deleteRequestBuilder = delete("/user/{id}", user.getId().toString())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult deleteMvcResult = mockMvc.perform(deleteRequestBuilder)
                 .andExpect(status().isNoContent())
                 .andReturn();
 
-        MockHttpServletRequestBuilder getRequestBuilder = get("/user/{id}", user.getId())
+        MockHttpServletRequestBuilder getRequestBuilder = get("/user/{id}", user.getId().toString())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult getMvcResult = mockMvc.perform(getRequestBuilder)
                 .andExpect(status().isNotFound())

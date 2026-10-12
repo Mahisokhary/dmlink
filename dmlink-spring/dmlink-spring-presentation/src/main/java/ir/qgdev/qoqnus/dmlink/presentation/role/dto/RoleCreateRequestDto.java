@@ -6,6 +6,6 @@ import java.util.Collection;
 
 public record RoleCreateRequestDto(
         @NonNull String name,
-        Collection<Long> parents
+        Collection<String> parents
 ) {
 }

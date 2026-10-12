@@ -50,7 +50,7 @@ public class RoleRestControllerTest {
     @WithMockUser(authorities = "role.create")
     public void testCreate() throws Exception {
         Role role = roleService.create(NAME);
-        RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of(role.getId()));
+        RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of(role.getId().toString()));
 
         MockHttpServletRequestBuilder requestBuilder = post("/role/")
                 .content(objectMapper.writeValueAsBytes(req))
@@ -67,7 +67,7 @@ public class RoleRestControllerTest {
         RoleDto roleDto = objectMapper.readValue(content, RoleDto.class);
         assertEquals("Name is different from passed name", NAME2, roleDto.name());
         assertEquals("Only one parent is expected for created role", 1, roleDto.parents().size());
-        assertTrue("Invalid parent for created role", roleDto.parents().contains(role.getId()));
+        assertTrue("Invalid parent for created role", roleDto.parents().contains(role.getId().toString()));
     }
 
     @Test
@@ -95,7 +95,7 @@ public class RoleRestControllerTest {
     public void testGet() throws Exception {
         Role role = roleService.create(NAME);
 
-        MockHttpServletRequestBuilder requestBuilder = get("/role/{id}", role.getId())
+        MockHttpServletRequestBuilder requestBuilder = get("/role/{id}", role.getId().toString())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isOk())
@@ -106,7 +106,7 @@ public class RoleRestControllerTest {
         assertNotNull("No content is returned", content);
 
         RoleDto roleDto = objectMapper.readValue(content, RoleDto.class);
-        assertEquals("ID is different from stored ID", role.getId(), roleDto.id());
+        assertEquals("ID is different from stored ID", role.getId().toString(), roleDto.id());
     }
 
     @Test
@@ -126,7 +126,7 @@ public class RoleRestControllerTest {
         assertNotNull("No content is returned", content);
 
         RoleDto roleDto = objectMapper.readValue(content, RoleDto.class);
-        assertEquals("ID is different from stored ID", role.getId(), roleDto.id());
+        assertEquals("ID is different from stored ID", role.getId().toString(), roleDto.id());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class RoleRestControllerTest {
         Role role = roleService.create(NAME);
         RoleCreateRequestDto req = new RoleCreateRequestDto(NAME2, Set.of());
 
-        MockHttpServletRequestBuilder requestBuilder = put("/role/{id}", role.getId())
+        MockHttpServletRequestBuilder requestBuilder = put("/role/{id}", role.getId().toString())
                 .content(objectMapper.writeValueAsBytes(req))
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON);
@@ -148,7 +148,7 @@ public class RoleRestControllerTest {
         assertNotNull("No content is returned", content);
 
         RoleDto roleDto = objectMapper.readValue(content, RoleDto.class);
-        assertEquals("ID is different from stored ID", role.getId(), roleDto.id());
+        assertEquals("ID is different from stored ID", role.getId().toString(), roleDto.id());
         assertEquals("Name is different from saved name", NAME2, roleDto.name());
     }
 
@@ -157,7 +157,7 @@ public class RoleRestControllerTest {
     public void testDelete() throws Exception {
         Role role = roleService.create(NAME);
 
-        MockHttpServletRequestBuilder requestBuilder = delete("/role/{id}", role.getId())
+        MockHttpServletRequestBuilder requestBuilder = delete("/role/{id}", role.getId().toString())
                 .accept(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder)
                 .andExpect(status().isNoContent())

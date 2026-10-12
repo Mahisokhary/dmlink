@@ -7,12 +7,12 @@ import ir.qgdev.qoqnus.dmlink.domain.user.User;
  * DTO for domain entity {@link User}
  */
 public record UserDto(
-        Long id,
+        String id,
         String username,
         @JsonProperty("display_name") String displayName
 ) {
     public UserDto(User user) {
-        this(user.getId(), user.getUsername(), user.getDisplayName());
+        this(user.getId().toString(), user.getUsername(), user.getDisplayName());
     }
 
 }

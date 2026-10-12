@@ -79,7 +79,7 @@ public class UserSelfRestControllerTest {
         assertNotNull("No content is returned", content);
 
         UserDto userDto = objectMapper.readValue(content, UserDto.class);
-        assertEquals("ID differs from passed ID", user.getId(), userDto.id());
+        assertEquals("ID differs from passed ID", user.getId().toString(), userDto.id());
         assertEquals("Username differs from passed username", USERNAME, userDto.username());
     }
 

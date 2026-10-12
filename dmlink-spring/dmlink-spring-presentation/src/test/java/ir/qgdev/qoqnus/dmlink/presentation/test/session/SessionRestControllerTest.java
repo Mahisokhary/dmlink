@@ -73,8 +73,8 @@ public class SessionRestControllerTest {
         assertNotNull("No content is returned", content);
 
         SessionCreateResponseDto res = objectMapper.readValue(content, SessionCreateResponseDto.class);
-        assertEquals("Incorrect JWT is returned", res.session().id().toString(), jwtService.verifyAndFetchId(res.token()));
-        assertEquals("Incorrect user is owner oof the session", user.getId(), res.session().user());
+        assertEquals("Incorrect JWT is returned", res.session().id(), jwtService.verifyAndFetchId(res.token()));
+        assertEquals("Incorrect user is owner oof the session", user.getId().toString(), res.session().user());
 
         SessionCreateRequestDto wrongBody = new SessionCreateRequestDto(USERNAME, PASSWORD + "WRONG PASSWORD");
         MockHttpServletRequestBuilder wrongRequestBuilder = post("/session/")
@@ -106,7 +106,7 @@ public class SessionRestControllerTest {
         assertEquals("Expected have exactly 1 value", 1, sessionDtos.length);
 
         SessionDto sessionDto = sessionDtos[0];
-        assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
+        assertEquals("ID differs from saved ID", session.getId().toString(), sessionDto.id());
     }
 
     @Test
@@ -126,8 +126,8 @@ public class SessionRestControllerTest {
         assertNotNull("No content is returned", content);
 
         SessionDto sessionDto = objectMapper.readValue(content, SessionDto.class);
-        assertEquals("ID differs from saved ID", session.getId(), sessionDto.id());
-        assertEquals("User differs from saved user", user.getId(), sessionDto.user());
+        assertEquals("ID differs from saved ID", session.getId().toString(), sessionDto.id());
+        assertEquals("User differs from saved user", user.getId().toString(), sessionDto.user());
     }
 
     @Test

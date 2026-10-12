@@ -90,7 +90,7 @@ public class LinkRestControllerTest {
         assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
         assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
         assertEquals("Name is different from saved name", NAME, linkDto.name());
-        assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
+        assertEquals("ID is different from saved ID", link.getId().toString(), linkDto.id());
     }
 
     @Test
@@ -112,7 +112,7 @@ public class LinkRestControllerTest {
         assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
         assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
         assertEquals("Name is different from saved name", NAME, linkDto.name());
-        assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
+        assertEquals("ID is different from saved ID", link.getId().toString(), linkDto.id());
     }
 
     @Test
@@ -135,7 +135,7 @@ public class LinkRestControllerTest {
         assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
         assertEquals("Target is different from saved target", TARGET, HttpUrl.fromString(linkDto.target()));
         assertEquals("Name is different from saved name", NAME, linkDto.name());
-        assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
+        assertEquals("ID is different from saved ID", link.getId().toString(), linkDto.id());
     }
 
     @Test
@@ -160,7 +160,7 @@ public class LinkRestControllerTest {
         assertNull("No owner is set for the link, but owner is not null", linkDto.owner());
         assertEquals("Target is different from saved target", TARGET2, HttpUrl.fromString(linkDto.target()));
         assertEquals("Name is different from saved name", NAME2, linkDto.name());
-        assertEquals("ID is different from saved ID", link.getId(), linkDto.id());
+        assertEquals("ID is different from saved ID", link.getId().toString(), linkDto.id());
     }
 
     @Test

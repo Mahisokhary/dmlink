@@ -71,8 +71,8 @@ public class SessionSelfRestControllerTest {
         assertNotNull("No content is returned", content);
 
         SessionDto sessionDto = objectMapper.readValue(content, SessionDto.class);
-        assertEquals("ID differs from passed ID", session.getId(), sessionDto.id());
-        assertEquals("User differs from passed user", user.getId(), sessionDto.user());
+        assertEquals("ID differs from passed ID", session.getId().toString(), sessionDto.id());
+        assertEquals("User differs from passed user", user.getId().toString(), sessionDto.user());
     }
 
     @Test
