@@ -18,7 +18,7 @@ Things I wanted to use in the project
 - [x] Unit tests
 - [x] Docker
 - [ ] Caching
-- [ ] API versioning
+- [x] API versioning
 
 ## Build
 
