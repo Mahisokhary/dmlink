@@ -32,6 +32,12 @@
     </modules>
 
     <dependencies>
+        <dependency>
+            <groupId>ir.qgdev.qoqnus.dmlink</groupId>
+            <artifactId>dmlink-application</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
         <!-- Embedded Database for testing -->
         <dependency>
             <groupId>com.h2database</groupId>

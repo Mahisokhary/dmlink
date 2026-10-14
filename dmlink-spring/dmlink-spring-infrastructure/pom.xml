@@ -13,12 +13,6 @@
     <artifactId>dmlink-spring-infrastructure</artifactId>
 
     <dependencies>
-        <dependency>
-            <groupId>ir.qgdev.qoqnus.dmlink</groupId>
-            <artifactId>dmlink-application</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-
         <!-- For Object-Relational Mapping -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
