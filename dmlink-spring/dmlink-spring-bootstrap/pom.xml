@@ -18,6 +18,7 @@
             <groupId>ir.qgdev.qoqnus.dmlink</groupId>
             <artifactId>dmlink-spring-presentation</artifactId>
             <version>${project.version}</version>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
