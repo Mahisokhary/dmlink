@@ -8,13 +8,13 @@ public record LinkDto(
         @NonNull String id,
         @NonNull String name,
         @NonNull String target,
-        Long owner
+        String owner
 ) {
     public LinkDto(Link link) {
         this(link.getId().toString(), link.getName(), link.getTarget().toString(), link.getOwner());
     }
 
     public LinkDto(String id, String name, String target, User owner) {
-        this(id, name, target, owner == null ? null : owner.getId());
+        this(id, name, target, owner == null ? null : owner.getId().toString());
     }
 }
