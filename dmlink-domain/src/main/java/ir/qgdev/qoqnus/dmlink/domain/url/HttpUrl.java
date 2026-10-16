@@ -2,6 +2,9 @@ package ir.qgdev.qoqnus.dmlink.domain.url;
 
 import lombok.NonNull;
 
+import java.io.ObjectStreamException;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.regex.Pattern;
 
 /**
@@ -11,7 +14,7 @@ import java.util.regex.Pattern;
  * @param port The port (443)
  * @param path The path (index.html)
  */
-public record HttpUrl(boolean secure, @NonNull String host, Integer port, String path) {
+public record HttpUrl(boolean secure, @NonNull String host, Integer port, String path) implements Serializable {
     private static final Pattern HTTP_URL_PATTERN = Pattern.compile("^(?:http(|s)://)?([^/:]+\\.[^/:]+)(?::(\\d+))?(/.*)?$");
 
     /**
@@ -50,6 +53,22 @@ public record HttpUrl(boolean secure, @NonNull String host, Integer port, String
             builder.append(path);
         }
         return builder.toString();
+    }
+
+    @Serial
+    private Object writeReplace() throws ObjectStreamException {
+        return new SerializedForm(toString());
+    }
+
+    private record SerializedForm(String value) implements Serializable {
+        @Serial
+        private static final long serialVersionUID = 1L;
+
+        @Serial
+        private Object readResolve() {
+            return HttpUrl.fromString(value);
+        }
+
     }
 
 }
