@@ -29,6 +29,7 @@ public class RoleEntity {
     String name;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     Collection<RoleEntity> parents;
 
     @ElementCollection(fetch = FetchType.EAGER)
