@@ -57,6 +57,11 @@
             <artifactId>hibernate-jcache</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <dependency>
+            <groupId>com.github.ben-manes.caffeine</groupId>
+            <artifactId>jcache</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -85,6 +90,20 @@
             </dependencies>
         </profile>
 
+        <!-- Database Cache -->
+        <profile>
+            <id>database-cache-caffeine</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <dependencies>
+                <dependency>
+                    <groupId>com.github.ben-manes.caffeine</groupId>
+                    <artifactId>jcache</artifactId>
+                    <scope>runtime</scope>
+                </dependency>
+            </dependencies>
+        </profile>
     </profiles>
 
     <properties>
