@@ -2,7 +2,7 @@
   <configuration default="false" name="debug run" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="ir.qgdev.qoqnus.dmlink.DmLinkSpringApplication" />
     <module name="dmlink-spring-bootstrap" />
-    <option name="PROGRAM_PARAMETERS" value="--debug --spring.profiles.active=dev" />
+    <option name="PROGRAM_PARAMETERS" value="--debug --spring.profiles.active=&quot;dev,database-cache,database-cache-caffeine&quot;" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="ir.qgdev.qoqnus.dmlink.*" />
