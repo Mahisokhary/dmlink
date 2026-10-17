@@ -4,3 +4,4 @@ spring:
   profiles:
     default:
       - tomcat
+      - database-cache
