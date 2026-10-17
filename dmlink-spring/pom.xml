@@ -51,6 +51,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Database Cache -->
+        <dependency>
+            <groupId>org.hibernate.orm</groupId>
+            <artifactId>hibernate-jcache</artifactId>
+            <scope>runtime</scope>
+        </dependency>
     </dependencies>
 
     <profiles>
