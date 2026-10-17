@@ -1,15 +1,16 @@
 package ir.qgdev.qoqnus.dmlink.infrastructure.role;
 
-import ir.qgdev.qoqnus.dmlink.domain.link.Link;
-import ir.qgdev.qoqnus.dmlink.domain.user.User;
+import jakarta.persistence.QueryHint;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.QueryHints;
 import org.springframework.stereotype.Repository;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface RoleJpaRepository extends JpaRepository<RoleEntity, Long> {
+    @QueryHints({
+            @QueryHint(name = "org.hibernate.cacheable", value = "true")
+    })
     Optional<RoleEntity> findByName(String name);
 }
