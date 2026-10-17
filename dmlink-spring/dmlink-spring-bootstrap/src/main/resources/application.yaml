@@ -5,3 +5,4 @@ spring:
     default:
       - tomcat
       - database-cache
+      - database-cache-caffeine
