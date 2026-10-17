@@ -34,6 +34,7 @@ public class RoleEntity {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "role_action")
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     Collection<String> actions;
 
 }
