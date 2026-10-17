@@ -4,3 +4,5 @@ spring:
   profiles:
     default:
       - tomcat
+      - database-cache
+      - database-cache-caffeine

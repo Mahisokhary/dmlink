@@ -17,7 +17,7 @@ Things I wanted to use in the project
 - [x] Database Independency (database can be decided on deployment!)
 - [x] Unit tests
 - [x] Docker
-- [ ] Caching
+- [x] Caching
 - [x] API versioning
 
 ## Build

@@ -1,0 +1,7 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        javax:
+          cache:
+            provider: com.github.benmanes.caffeine.jcache.spi.CaffeineCachingProvider
