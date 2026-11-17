@@ -19,6 +19,7 @@ Things I wanted to use in the project
 - [x] Docker
 - [x] Caching
 - [x] API versioning
+- [ ] Form Validation
 
 ## Build
 
